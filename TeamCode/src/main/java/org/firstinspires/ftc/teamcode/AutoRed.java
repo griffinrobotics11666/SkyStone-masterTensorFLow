@@ -9,11 +9,14 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 @Autonomous(name="Autonomous Red", group="Auto")
 @Disabled
 public class AutoRed extends OpMode {
+    HardwareRobot robot = new HardwareRobot();
+
     private ElapsedTime runtime = new ElapsedTime();
 
     @Override
     public void init() {
         telemetry.addData("Status", "Initialized");
+        robot.init(hardwareMap);
 
     }
 
