@@ -54,47 +54,47 @@ public class DriverControl extends OpMode {
   double closedServoR;
 
   //gamepad1
-  boolean RB1isPressed  = gamepad1.right_bumper;
-  boolean LB1isPressed  = gamepad1.left_bumper;
-  boolean B1isPressed   = gamepad1.b;
-  boolean A1isPressed   = gamepad1.a;
-  boolean Y1isPressed   = gamepad1.y;
-  boolean X1isPressed   = gamepad1.x;
-  boolean dPadUp1       = gamepad1.dpad_up;
-  boolean dPadDown1     = gamepad1.dpad_down;
-  boolean dPadLeft1     = gamepad1.dpad_left;
-  boolean dPadRight1    = gamepad1.dpad_right;
-  boolean R3isPressed1  = gamepad1.right_stick_button;
-  boolean L3isPressed1  = gamepad1.left_stick_button;
+  boolean RB1isPressed;
+  boolean LB1isPressed;
+  boolean B1isPressed;
+  boolean A1isPressed;
+  boolean Y1isPressed;
+  boolean X1isPressed;
+  boolean dPadUp1;
+  boolean dPadDown1;
+  boolean dPadLeft1;
+  boolean dPadRight1;
+  boolean R3isPressed1;
+  boolean L3isPressed1;
 
-  double RT1            = gamepad1.right_trigger;
-  double LT1            = gamepad1.left_trigger;
-  double leftStickY1    = gamepad1.left_stick_y;
-  double leftStickX1    = gamepad1.left_stick_x;
-  double rightStickX1   = gamepad1.right_stick_x;
+  double RT1;
+  double LT1;
+  double leftStickY1;
+  double leftStickX1;
+  double rightStickX1;
   double leftPower;
   double rightPower;
 
   //gamepad2
-  boolean RB2isPressed = gamepad2.right_bumper;
-  boolean LB2isPressed  = gamepad2.left_bumper;
-  boolean B2isPressed   = gamepad2.b;
-  boolean A2isPressed   = gamepad2.a;
-  boolean Y2isPressed   = gamepad2.y;
-  boolean X2isPressed   = gamepad2.x;
-  boolean dPadUp2       = gamepad2.dpad_up;
-  boolean dPadDown2     = gamepad2.dpad_down;
-  boolean dPadLeft2     = gamepad2.dpad_left;
-  boolean dPadRight2    = gamepad2.dpad_right;
-  boolean R3isPressed2  = gamepad2.right_stick_button;
-  boolean L3isPressed2  = gamepad2.left_stick_button;
+  boolean RB2isPressed;
+  boolean LB2isPressed;
+  boolean B2isPressed;
+  boolean A2isPressed;
+  boolean Y2isPressed;
+  boolean X2isPressed;
+  boolean dPadUp2;
+  boolean dPadDown2;
+  boolean dPadLeft2;
+  boolean dPadRight2;
+  boolean R3isPressed2;
+  boolean L3isPressed2;
 
-  double RT2            = gamepad2.right_trigger;
-  double LT2            = gamepad2.left_trigger;
-  double leftStickY2    = gamepad2.left_stick_y;
-  double leftStickX2    = gamepad2.left_stick_x;
-  double rightStickY2   = gamepad2.right_stick_y;
-  double rightStickX2   = gamepad2.right_stick_x;
+  double RT2;
+  double LT2;
+  double leftStickY2;
+  double leftStickX2;
+  double rightStickY2;
+  double rightStickX2;
 
 
   @Override
@@ -128,6 +128,48 @@ public class DriverControl extends OpMode {
    */
   @Override
   public void loop() {
+    RB1isPressed  = gamepad1.right_bumper;
+    LB1isPressed  = gamepad1.left_bumper;
+    B1isPressed   = gamepad1.b;
+    A1isPressed   = gamepad1.a;
+    Y1isPressed   = gamepad1.y;
+    X1isPressed   = gamepad1.x;
+    dPadUp1       = gamepad1.dpad_up;
+    dPadDown1     = gamepad1.dpad_down;
+    dPadLeft1     = gamepad1.dpad_left;
+    dPadRight1    = gamepad1.dpad_right;
+    R3isPressed1  = gamepad1.right_stick_button;
+    L3isPressed1  = gamepad1.left_stick_button;
+
+    RT1            = gamepad1.right_trigger;
+    LT1            = gamepad1.left_trigger;
+    leftStickY1    = gamepad1.left_stick_y;
+    leftStickX1    = gamepad1.left_stick_x;
+    rightStickX1   = gamepad1.right_stick_x;
+
+
+
+    //gamepad2
+    RB2isPressed = gamepad2.right_bumper;
+    LB2isPressed  = gamepad2.left_bumper;
+    B2isPressed   = gamepad2.b;
+    A2isPressed   = gamepad2.a;
+    Y2isPressed   = gamepad2.y;
+    X2isPressed   = gamepad2.x;
+    dPadUp2       = gamepad2.dpad_up;
+    dPadDown2     = gamepad2.dpad_down;
+    dPadLeft2     = gamepad2.dpad_left;
+    dPadRight2    = gamepad2.dpad_right;
+    R3isPressed2  = gamepad2.right_stick_button;
+    L3isPressed2  = gamepad2.left_stick_button;
+
+    RT2            = gamepad2.right_trigger;
+    LT2            = gamepad2.left_trigger;
+    leftStickY2    = gamepad2.left_stick_y;
+    leftStickX2    = gamepad2.left_stick_x;
+    rightStickY2   = gamepad2.right_stick_y;
+    rightStickX2   = gamepad2.right_stick_x;
+
     telemetry.addData("Status", "Run Time: " + runtime.toString());
 
     leftPower = Range.clip(-leftStickY1 + leftStickX1, -1.0, 1.0);
