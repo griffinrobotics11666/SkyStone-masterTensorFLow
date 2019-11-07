@@ -184,9 +184,9 @@ public class DriverControl extends OpMode {
 
     else if (rightStickX1 != 0){
       robot.leftFront.setPower(rightStickX1);
-      robot.rightFront.setPower(rightStickX1);
+      robot.rightFront.setPower(-rightStickX1);
       robot.leftBack.setPower(-rightStickX1);
-      robot.rightBack.setPower(-rightStickX1);
+      robot.rightBack.setPower(rightStickX1);
     }
     else{
       robot.leftFront.setPower(0);
