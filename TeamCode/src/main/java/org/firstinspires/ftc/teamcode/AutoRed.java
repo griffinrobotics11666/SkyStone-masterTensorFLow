@@ -19,14 +19,52 @@ import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 //@Disabled
 public class AutoRed extends LinearOpMode {
     HardwareRobot robot = new HardwareRobot();
+    public void stopRobot() {
+        wheelSetMode(2);
+
+        robot.leftBack.setPower(0);
+        robot.leftFront.setPower(0);
+        robot.rightFront.setPower(0);
+        robot.rightBack.setPower(0);
+
+    }
+    public void wheelSetMode(int mode){
+        robot.leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.leftFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        robot.rightFront.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+
+        if(mode == 1){
+            robot.leftBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            robot.rightBack.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            robot.leftFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            robot.rightFront.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+            robot.leftBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.rightBack.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.leftFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.rightFront.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        }
+        if(mode == 2){
+            robot.leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            robot.rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            robot.leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            robot.rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        }
+
+
+    }
 
     private ElapsedTime runtime = new ElapsedTime();
-    public void gyroMove ( double distance, double speed){
+    public void gyroMove (double distance, double speed){
+
         double WHEEL_DIAMETER = 4;
         double WHEEL_CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
-        double tickperInch = 2 * (383.6) / WHEEL_CIRCUMFERENCE;
+        double tickperInch = (2 * 383.6) / WHEEL_CIRCUMFERENCE;
         double deltaSpeed = 0.05;// hardcoded
         double deltaA = 0;
+        double whithin1ft = tickperInch * 12;
+        double powerinft;
         robot.angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
         double currentAngle = robot.angles.firstAngle;
 
@@ -34,6 +72,8 @@ public class AutoRed extends LinearOpMode {
         int newRightBackTarget;
         int newRightFrontTarget;
         int newLeftBackTarget;
+
+        wheelSetMode(1);
 
 
         //find how many encoder counts the motor is at, then add the distance to it
@@ -59,28 +99,34 @@ public class AutoRed extends LinearOpMode {
         //While loop is necessary!
         while (robot.leftBack.isBusy() && robot.rightFront.isBusy() && robot.rightBack.isBusy() && robot.leftFront.isBusy()) {
             robot.angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+            if( robot.leftBack.getTargetPosition() - robot.leftBack.getCurrentPosition() < whithin1ft){
+                powerinft = .5;
+            }else{
+                powerinft = 1;
+            }
 
             if (currentAngle - robot.angles.firstAngle > deltaA) {
                 telemetry.addData("left", 0);
-                robot.leftFront.setPower(speed - deltaSpeed);
-                robot.rightFront.setPower(speed + deltaSpeed);
-                robot.leftBack.setPower(speed - deltaSpeed);
-                robot.rightBack.setPower(speed + deltaSpeed);
+                robot.leftFront.setPower((speed - deltaSpeed) * powerinft);
+                robot.rightFront.setPower((speed + deltaSpeed) * powerinft);
+                robot.leftBack.setPower((speed - deltaSpeed) * powerinft);
+                robot.rightBack.setPower((speed + deltaSpeed) * powerinft);
             } else if (currentAngle - robot.angles.firstAngle < deltaA) {
                 telemetry.addData("right", 0);
-                robot.leftFront.setPower(speed + deltaSpeed);
-                robot.rightFront.setPower(speed - deltaSpeed);
-                robot.leftBack.setPower(speed + deltaSpeed);
-                robot.rightBack.setPower(speed - deltaSpeed);
+                robot.leftFront.setPower((speed + deltaSpeed)* powerinft);
+                robot.rightFront.setPower((speed - deltaSpeed)*powerinft);
+                robot.leftBack.setPower((speed + deltaSpeed)*powerinft);
+                robot.rightBack.setPower((speed - deltaSpeed)*powerinft);
             } else {
                 telemetry.addData("straight", 0);
-                robot.leftFront.setPower(speed);
-                robot.rightFront.setPower(speed);
-                robot.leftBack.setPower(speed);
-                robot.rightBack.setPower(speed);
+                robot.leftFront.setPower((speed));
+                robot.rightFront.setPower((speed));
+                robot.leftBack.setPower((speed));
+                robot.rightBack.setPower((speed));
             }
             telemetry.update();
         }
+        stopRobot();
 
     }
 
@@ -97,11 +143,18 @@ public class AutoRed extends LinearOpMode {
         double robotAngle = robot.angles.firstAngle;
         double previousAngle = robot.angles.firstAngle;
 
+
+        robot.leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        robot.rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+
         targetAngle = initialAngle + angle;
 
         if (Math.abs(angle) < 8) {
             minMotorPower = .2;
         }
+
 
         while (Math.abs(targetAngle - robotAngle) > .5) {
             robot.angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
@@ -164,8 +217,9 @@ public class AutoRed extends LinearOpMode {
 
 
         }
+        stopRobot();
     }
-
+// TODO GET A BUTTON TO RESET THE ENCODER COUNTS ON THE ARM OF THE ROBOT
     @Override
     public void runOpMode() {
         telemetry.addData("Status", "Initialized");
@@ -175,14 +229,26 @@ public class AutoRed extends LinearOpMode {
 
         waitForStart();
         runtime.reset();
-
-        turn(90,1);
-
-
-
-
-
-
+//        gyroMove(8*12,1);
+//        sleep(5000);
+//
+//        turn(-90,1);
+//        sleep(5000);
+//
+//        gyroMove(20,1);
+//        sleep(5000);
+//
+//        turn(180,1);
+//        sleep(5000);
+//
+//        gyroMove(20,1);
+//        sleep(5000);
+//
+//        turn(90,1);
+//        sleep(5000);
+//
+//        gyroMove(8*12,1);
+//        sleep(5000);
 
 
     }

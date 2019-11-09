@@ -133,8 +133,8 @@ public class   HardwareRobot
         // Define and initialize ALL installed servos.
         leftClaw        = hwMap.get(Servo.class, "left_hand");
         rightClaw       = hwMap.get(Servo.class, "right_hand");
-        verticalServo   = hwMap.get(Servo.class, "vertical_servo");
-        horizontalServo = hwMap.get(Servo.class, "horizontal_servo");
+        verticalServo   = hwMap.get(Servo.class, "y_servo");
+        horizontalServo = hwMap.get(Servo.class, "x_servo");
         rightWheelServo = hwMap.get(Servo.class, "right_wheel_servo");
         leftWheelServo  = hwMap.get(Servo.class, "left_wheel_servo");
         leftClaw.setPosition(MID_SERVO);
