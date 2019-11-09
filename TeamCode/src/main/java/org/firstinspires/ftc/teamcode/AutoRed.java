@@ -16,22 +16,15 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 @Autonomous(name="Autonomous Red", group="Auto")
-@Disabled
-public class AutoRed extends OpMode {
+//@Disabled
+public class AutoRed extends LinearOpMode {
     HardwareRobot robot = new HardwareRobot();
 
     private ElapsedTime runtime = new ElapsedTime();
-    @Override
-    public void init() {
-        telemetry.addData("Status", "Initialized");
-        robot.init(hardwareMap);
-
-    }
-
-    public void gyroMove(double distance, double speed) {
+    public void gyroMove ( double distance, double speed){
         double WHEEL_DIAMETER = 4;
         double WHEEL_CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
-        double tickperInch = 383.6/WHEEL_CIRCUMFERENCE;
+        double tickperInch = 2 * (383.6) / WHEEL_CIRCUMFERENCE;
         double deltaSpeed = 0.05;// hardcoded
         double deltaA = 0;
         robot.angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
@@ -43,12 +36,11 @@ public class AutoRed extends OpMode {
         int newLeftBackTarget;
 
 
-
         //find how many encoder counts the motor is at, then add the distance to it
-        newLeftFrontTarget = robot.leftFront.getCurrentPosition() + (int)(distance * tickperInch);
-        newLeftBackTarget = robot.leftBack.getCurrentPosition() + (int)(distance * tickperInch);
-        newRightFrontTarget = robot.rightFront.getCurrentPosition() + (int)(distance * tickperInch);
-        newRightBackTarget = robot.rightBack.getCurrentPosition() + (int)(distance * tickperInch);
+        newLeftFrontTarget = robot.leftFront.getCurrentPosition() + (int) (distance * tickperInch);
+        newLeftBackTarget = robot.leftBack.getCurrentPosition() + (int) (distance * tickperInch);
+        newRightFrontTarget = robot.rightFront.getCurrentPosition() + (int) (distance * tickperInch);
+        newRightBackTarget = robot.rightBack.getCurrentPosition() + (int) (distance * tickperInch);
         //set the target encoder count to the motors
         robot.leftFront.setTargetPosition(newLeftFrontTarget);
         robot.leftBack.setTargetPosition(newLeftBackTarget);
@@ -65,26 +57,25 @@ public class AutoRed extends OpMode {
         robot.leftBack.setPower(Math.abs(speed));
         robot.rightBack.setPower(Math.abs(speed));
         //While loop is necessary!
-        while (robot.leftBack.isBusy() && robot.rightFront.isBusy() && robot.rightBack.isBusy() && robot.leftFront.isBusy())
-        {
+        while (robot.leftBack.isBusy() && robot.rightFront.isBusy() && robot.rightBack.isBusy() && robot.leftFront.isBusy()) {
             robot.angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 
-            if (currentAngle - robot.angles.firstAngle > deltaA){
+            if (currentAngle - robot.angles.firstAngle > deltaA) {
                 telemetry.addData("left", 0);
                 robot.leftFront.setPower(speed - deltaSpeed);
                 robot.rightFront.setPower(speed + deltaSpeed);
                 robot.leftBack.setPower(speed - deltaSpeed);
                 robot.rightBack.setPower(speed + deltaSpeed);
-            }else if (currentAngle - robot.angles.firstAngle < deltaA){
+            } else if (currentAngle - robot.angles.firstAngle < deltaA) {
                 telemetry.addData("right", 0);
-                robot. leftFront.setPower(speed + deltaSpeed);
-                robot. rightFront.setPower(speed - deltaSpeed);
-                robot. leftBack.setPower(speed + deltaSpeed);
+                robot.leftFront.setPower(speed + deltaSpeed);
+                robot.rightFront.setPower(speed - deltaSpeed);
+                robot.leftBack.setPower(speed + deltaSpeed);
                 robot.rightBack.setPower(speed - deltaSpeed);
-            }else {
+            } else {
                 telemetry.addData("straight", 0);
                 robot.leftFront.setPower(speed);
-                robot. rightFront.setPower(speed);
+                robot.rightFront.setPower(speed);
                 robot.leftBack.setPower(speed);
                 robot.rightBack.setPower(speed);
             }
@@ -93,69 +84,69 @@ public class AutoRed extends OpMode {
 
     }
 
-    public void turn(double angle, double speed){
+    public void turn( double angle, double speed){
+        robot.angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+
+        double initialAngle = robot.angles.firstAngle;
+        double motorPower;
+        double minMotorPower = 0.3;
+        double powerScaleFactor;
+        double targetAngle;
+        double currentAngle;
+        double deltaAngle;
+        double robotAngle = robot.angles.firstAngle;
+        double previousAngle = robot.angles.firstAngle;
+
+        targetAngle = initialAngle + angle;
+
+        if (Math.abs(angle) < 8) {
+            minMotorPower = .2;
+        }
+
+        while (Math.abs(targetAngle - robotAngle) > .5) {
             robot.angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
+            currentAngle = robot.angles.firstAngle;
 
-            double initialAngle = robot.angles.firstAngle;
-            double motorPower;
-            double minMotorPower = 0.3;
-            double powerScaleFactor;
-            double targetAngle;
-            double currentAngle;
-            double deltaAngle;
-            double robotAngle = robot.angles.firstAngle;
-            double previousAngle = robot.angles.firstAngle;
-
-            targetAngle = initialAngle + angle;
-
-            if (Math.abs(angle) < 8) {
-                minMotorPower = .2;
+            //update speed dynamically to slow when approaching the target
+            powerScaleFactor = Math.sqrt(Math.abs((targetAngle - robotAngle) / angle));
+            if (powerScaleFactor > 1) {
+                powerScaleFactor = 1;
+            }
+            motorPower = powerScaleFactor * speed;
+            if (motorPower < minMotorPower) {
+                motorPower = minMotorPower;
             }
 
-            while (Math.abs(targetAngle - robotAngle) > .5) {
-                robot.angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
-                currentAngle = robot.angles.firstAngle;
-
-                //update speed dynamically to slow when approaching the target
-                powerScaleFactor = Math.sqrt(Math.abs((targetAngle - robotAngle) / angle));
-                if (powerScaleFactor > 1) {
-                    powerScaleFactor = 1;
-                }
-                motorPower = powerScaleFactor * speed;
-                if (motorPower < minMotorPower) {
-                    motorPower = minMotorPower;
-                }
-
-                //determine which direction the robot should turn
+            //determine which direction the robot should turn
 
 
-                if ((targetAngle - robotAngle) > 0) {
-                    robot.leftBack.setPower(-motorPower);
-                    robot.leftFront.setPower(-motorPower);
-                    robot.rightBack.setPower(motorPower);
-                    robot.rightFront.setPower(motorPower);
-                }
-                if ((targetAngle - robotAngle) < 0) {
-                    robot.leftBack.setPower(motorPower);
-                    robot.leftFront.setPower(motorPower);
-                    robot.rightBack.setPower(-motorPower);
-                    robot.rightFront.setPower(-motorPower);
-                }
+            if ((targetAngle - robotAngle) > 0) {
+                robot.leftBack.setPower(-motorPower);
+                robot.leftFront.setPower(-motorPower);
+                robot.rightBack.setPower(motorPower);
+                robot.rightFront.setPower(motorPower);
+            }
+            if ((targetAngle - robotAngle) < 0) {
+                robot.leftBack.setPower(motorPower);
+                robot.leftFront.setPower(motorPower);
+                robot.rightBack.setPower(-motorPower);
+                robot.rightFront.setPower(-motorPower);
+            }
 
 
-                //define how the angle is changing and deal with the stupid 180 -> -180 thing
-                deltaAngle = currentAngle - previousAngle;
-                if (deltaAngle > 180) {
-                    deltaAngle -= 360;
-                } else if (deltaAngle < -180) {
-                    deltaAngle += 360;
-                }
+            //define how the angle is changing and deal with the stupid 180 -> -180 thing
+            deltaAngle = currentAngle - previousAngle;
+            if (deltaAngle > 180) {
+                deltaAngle -= 360;
+            } else if (deltaAngle < -180) {
+                deltaAngle += 360;
+            }
 
-                robotAngle += deltaAngle;
-                previousAngle = currentAngle;
+            robotAngle += deltaAngle;
+            previousAngle = currentAngle;
 
 
-                //        double targetAngle, currentangle,multiplier;
+            //        double targetAngle, currentangle,multiplier;
 //        robot.angles  = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
 //        currentangle = robot.angles.firstAngle;
 //        targetAngle = robot.angles.firstAngle + angle;
@@ -172,37 +163,27 @@ public class AutoRed extends OpMode {
 //        }
 
 
-            }
         }
-
-
-
-
-
-    /*
-     * Code to run when the op mode  is first enabled goes here
-     * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#start()
-     */
-    @Override
-    public void init_loop() {
     }
 
-    /*
-     * This method will be called ONCE when start is pressed
-     * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#loop()
-     */
     @Override
-    public void start() {
+    public void runOpMode() {
+        telemetry.addData("Status", "Initialized");
+        robot.init(hardwareMap);
+
+
+
+        waitForStart();
         runtime.reset();
-    }
 
-    /*
-     * This method will be called repeatedly in a loop
-     * @see com.qualcomm.robotcore.eventloop.opmode.OpMode#loop()
-     */
-    @Override
-    public void loop() {
-        telemetry.addData("Status", "Run Time: " + runtime.toString());
-    }
+        turn(90,1);
 
+
+
+
+
+
+
+
+    }
 }

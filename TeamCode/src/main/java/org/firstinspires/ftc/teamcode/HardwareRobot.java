@@ -72,11 +72,11 @@ public class   HardwareRobot
    // public DcMotor rightWheel  = null;
    // public DcMotor leftWheel   = null;
     //Servos of the claw
-   // public Servo  leftClaw     = null;
-   // public Servo  rightClaw    = null;
+    public Servo  leftClaw     = null;
+    public Servo  rightClaw    = null;
     //servos that twist the claw
-//    public Servo verticalServo   = null;
-//    public Servo horizontalServo = null;
+    public Servo verticalServo   = null;
+    public Servo horizontalServo = null;
 //    //Servos that move the wheels grabbing stones
     public Servo rightWheelServo = null;
     public Servo leftWheelServo  = null;
@@ -131,16 +131,16 @@ public class   HardwareRobot
 //        leftWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and initialize ALL installed servos.
-//        leftClaw        = hwMap.get(Servo.class, "left_hand");
-//        rightClaw       = hwMap.get(Servo.class, "right_hand");
-//        verticalServo   = hwMap.get(Servo.class, "vertical_servo");
-//        horizontalServo = hwMap.get(Servo.class, "horizontal_servo");
+        leftClaw        = hwMap.get(Servo.class, "left_hand");
+        rightClaw       = hwMap.get(Servo.class, "right_hand");
+        verticalServo   = hwMap.get(Servo.class, "vertical_servo");
+        horizontalServo = hwMap.get(Servo.class, "horizontal_servo");
         rightWheelServo = hwMap.get(Servo.class, "right_wheel_servo");
         leftWheelServo  = hwMap.get(Servo.class, "left_wheel_servo");
-//        leftClaw.setPosition(MID_SERVO);
-//        rightClaw.setPosition(MID_SERVO);
-//        verticalServo.setPosition(MID_SERVO);
-//        horizontalServo.setPosition(MID_SERVO);
+        leftClaw.setPosition(MID_SERVO);
+        rightClaw.setPosition(MID_SERVO);
+        verticalServo.setPosition(MID_SERVO);
+        horizontalServo.setPosition(MID_SERVO);
         leftWheelServo.setPosition(0);
         rightWheelServo.setPosition(1);
 

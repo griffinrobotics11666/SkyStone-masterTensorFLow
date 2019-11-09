@@ -8,7 +8,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
     @TeleOp(name="debugMode", group="Auto")
 //    @Disabled
  public class debug extends OpMode {
-        double movement = .001;
+        double movement = .0005;
         boolean RB1isPressed;
         boolean LB1isPressed;
         boolean B1isPressed;
@@ -139,6 +139,33 @@ import com.qualcomm.robotcore.util.ElapsedTime;
             }
             if(X1isPressed){
                 robot.rightWheelServo.setPosition(robot.rightWheelServo.getPosition() - movement);
+            }
+            if(!RB2isPressed) {
+                if (A2isPressed) {
+                    robot.rightClaw.setPosition(robot.rightClaw.getPosition() - movement);
+                }
+                if (B2isPressed) {
+                    robot.rightClaw.setPosition(robot.rightClaw.getPosition() + movement);
+                }
+                if (X2isPressed) {
+                    robot.leftClaw.setPosition(robot.leftClaw.getPosition() - movement);
+                }
+                if (Y2isPressed) {
+                    robot.leftClaw.setPosition(robot.leftClaw.getPosition() + movement);
+                }
+            }else{
+                if (A2isPressed) {
+                    robot.horizontalServo.setPosition(robot.horizontalServo.getPosition() - movement);
+                }
+                if (B2isPressed) {
+                    robot.horizontalServo.setPosition(robot.horizontalServo.getPosition() + movement);
+                }
+                if (X2isPressed) {
+                    robot.verticalServo.setPosition(robot.verticalServo.getPosition() - movement);
+                }
+                if (Y2isPressed) {
+                    robot.verticalServo.setPosition(robot.verticalServo.getPosition() + movement);
+                }
             }
             //right servo .288 (open) 1(close)
             //left servo .68 (open) 0 (close)
