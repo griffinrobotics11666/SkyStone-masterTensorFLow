@@ -126,19 +126,32 @@ import com.qualcomm.robotcore.util.ElapsedTime;
             rightStickY2   = gamepad2.right_stick_y;
             rightStickX2   = gamepad2.right_stick_x;
 
-
-
-            if(A1isPressed){
-                robot.leftWheelServo.setPosition(robot.leftWheelServo.getPosition() + movement);
-            }
-            if(B1isPressed){
-                robot.leftWheelServo.setPosition(robot.leftWheelServo.getPosition() - movement);
-            }
-            if(Y1isPressed){
-                robot.rightWheelServo.setPosition(robot.rightWheelServo.getPosition() + movement);
-            }
-            if(X1isPressed){
-                robot.rightWheelServo.setPosition(robot.rightWheelServo.getPosition() - movement);
+            if(LB1isPressed) {
+                if (A1isPressed) {
+                    robot.armMotor.setPower(.5);
+                }
+                else {
+                    robot.armMotor.setPower(0);
+                }
+                if(B1isPressed) {
+                    robot.armMotor.setPower(-.5);
+                }
+                else {
+                    robot.armMotor.setPower(0);
+                }
+            }else {
+                if (A1isPressed) {
+                    robot.leftWheelServo.setPosition(robot.leftWheelServo.getPosition() + movement);
+                }
+                if (B1isPressed) {
+                    robot.leftWheelServo.setPosition(robot.leftWheelServo.getPosition() - movement);
+                }
+                if (Y1isPressed) {
+                    robot.rightWheelServo.setPosition(robot.rightWheelServo.getPosition() + movement);
+                }
+                if (X1isPressed) {
+                    robot.rightWheelServo.setPosition(robot.rightWheelServo.getPosition() - movement);
+                }
             }
             if(!RB2isPressed) {
                 if (A2isPressed) {
