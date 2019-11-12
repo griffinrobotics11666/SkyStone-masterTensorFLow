@@ -349,19 +349,27 @@ public class DriverControl extends OpMode {
       turn(90,1);
     }
     if(A2isPressed){
-      if(robot.rightClaw.getPosition() == robot.rightclawclose)
-      while(Math.abs(robot.horizontalServo.getPosition() - robot.horizontalClawGrab) > .001 && Math.abs(robot.verticalServo.getPosition() - robot.verticalClawGrab) > .001){
-        robot.verticalServo.setPosition(robot.verticalClawGrab);
-        robot.horizontalServo.setPosition(robot.horizontalClawGrab);
+      if(Math.abs(robot.rightClaw.getPosition() - robot.rightclawclose) < .05) {
+        while (Math.abs(robot.horizontalServo.getPosition() - robot.horizontalClawGrab) > .001 && Math.abs(robot.verticalServo.getPosition() - robot.verticalClawGrab) > .001) {
+          robot.verticalServo.setPosition(robot.verticalClawGrab);
+          robot.horizontalServo.setPosition(robot.horizontalClawGrab);
+        }
+        robot.leftClaw.setPosition(robot.leftclawclose);
+        robot.rightClaw.setPosition(robot.rightclawclose);
       }
-      robot.leftClaw.setPosition(robot.leftclawclose);
-      robot.rightClaw.setPosition(robot.rightclawclose);
+      else{
+        while (Math.abs(robot.horizontalServo.getPosition() - robot.horizontalClawPlace) > .001 && Math.abs(robot.verticalServo.getPosition() - robot.verticalClawPlace) > .001) {
+          robot.verticalServo.setPosition(robot.verticalClawPlace);
+          robot.horizontalServo.setPosition(robot.horizontalClawPlace);
+        }
+        robot.leftClaw.setPosition(robot.leftclawopen);
+        robot.rightClaw.setPosition(robot.rightclawopen);
+      }
     }
     //if(A1isPressed) {
       //robot.rightWheelServo.setPosition(1);
       //robot.leftWheelServo.setPosition(1);
     //}
-
   }
 
 
