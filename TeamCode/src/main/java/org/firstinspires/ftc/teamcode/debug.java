@@ -174,6 +174,12 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
             telemetry.addData("Right servo",robot.rightWheelServo.getPosition());
 
+            telemetry.addData("left claw",robot.leftClaw.getPosition());
+            telemetry.addData("left claw",robot.rightClaw.getPosition());
+            telemetry.addData("horizontal servo (x)",robot.horizontalServo.getPosition());
+            telemetry.addData("vertical servo (y)",robot.verticalServo.getPosition());
+
+
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
         }

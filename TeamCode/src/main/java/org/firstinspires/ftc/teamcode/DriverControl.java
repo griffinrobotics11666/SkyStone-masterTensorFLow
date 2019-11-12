@@ -347,7 +347,15 @@ public class DriverControl extends OpMode {
     }
     if(A1isPressed){
       turn(90,1);
-
+    }
+    if(A2isPressed){
+      if(robot.rightClaw.getPosition() == robot.rightclawclose)
+      while(Math.abs(robot.horizontalServo.getPosition() - robot.horizontalClawGrab) > .001 && Math.abs(robot.verticalServo.getPosition() - robot.verticalClawGrab) > .001){
+        robot.verticalServo.setPosition(robot.verticalClawGrab);
+        robot.horizontalServo.setPosition(robot.horizontalClawGrab);
+      }
+      robot.leftClaw.setPosition(robot.leftclawclose);
+      robot.rightClaw.setPosition(robot.rightclawclose);
     }
     //if(A1isPressed) {
       //robot.rightWheelServo.setPosition(1);

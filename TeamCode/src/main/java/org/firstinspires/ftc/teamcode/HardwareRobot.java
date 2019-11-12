@@ -81,10 +81,17 @@ public class   HardwareRobot
     public Servo rightWheelServo = null;
     public Servo leftWheelServo  = null;
 
-    public static final double MID_SERVO       =  0;
+    public static final double MID_SERVO       =  .5;
     //public static final double ARM_UP_POWER    =  0.45 ;
     //public static final double ARM_DOWN_POWER  = -0.45 ;
-
+    public double rightclawopen = .047;
+    public double rightclawclose = 0;
+    public double leftclawopen = .97;
+    public double leftclawclose = .94;
+    public double horizontalClawGrab = .68;
+    public double horizontalClawPlace = .12;
+    public double verticalClawGrab = .68;
+    public double verticalClawPlace = .03;
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
@@ -137,10 +144,10 @@ public class   HardwareRobot
         horizontalServo = hwMap.get(Servo.class, "x_servo");
         rightWheelServo = hwMap.get(Servo.class, "right_wheel_servo");
         leftWheelServo  = hwMap.get(Servo.class, "left_wheel_servo");
-        leftClaw.setPosition(MID_SERVO);
-        rightClaw.setPosition(MID_SERVO);
-        verticalServo.setPosition(MID_SERVO);
-        horizontalServo.setPosition(MID_SERVO);
+        leftClaw.setPosition(leftclawopen);
+        rightClaw.setPosition(rightclawopen);
+        verticalServo.setPosition(verticalClawGrab);
+        horizontalServo.setPosition(horizontalClawGrab);
         leftWheelServo.setPosition(0);
         rightWheelServo.setPosition(1);
 
