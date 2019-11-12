@@ -32,6 +32,7 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -68,6 +69,7 @@ public class   HardwareRobot
     public DcMotor rightFront  = null;
     public DcMotor leftBack    = null;
     public DcMotor rightBack   = null;
+    public DcMotor armMotor    = null;
     //Motors that move the wheels grabbing stones
    // public DcMotor rightWheel  = null;
    // public DcMotor leftWheel   = null;
@@ -111,13 +113,15 @@ public class   HardwareRobot
         rightFront = hwMap.get(DcMotor.class, "right_front");
         leftBack   = hwMap.get(DcMotor.class, "left_back");
         rightBack  = hwMap.get(DcMotor.class, "right_back");
+        armMotor   = hwMap.get(DcMotor.class, "arm_motor");
 //        rightWheel = hwMap.get(DcMotor.class, "right_wheel");
 //        leftWheel  = hwMap.get(DcMotor.class, "left_wheel");
         leftFront.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightFront.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         leftBack.setDirection(DcMotor.Direction.FORWARD);
         rightBack.setDirection(DcMotor.Direction.REVERSE);
-//        rightWheel.setDirection(DcMotor.Direction.REVERSE);
+        armMotor.setDirection(DcMotor.Direction.FORWARD); //TODO CHECK THIS OR DIE
+        //        rightWheel.setDirection(DcMotor.Direction.REVERSE);
 //        leftWheel.setDirection(DcMotor.Direction.FORWARD);
 
         // Set all motors to zero power
@@ -125,7 +129,8 @@ public class   HardwareRobot
         rightFront.setPower(0);
         leftBack.setPower(0);
         rightBack.setPower(0);
-//        rightWheel.setPower(0);
+        armMotor.setPower(0);
+        //        rightWheel.setPower(0);
 //        leftWheel.setPower(0);
 
         // Set all motors to run without encoders.
@@ -134,7 +139,8 @@ public class   HardwareRobot
         rightFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        rightWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        //        rightWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 //        leftWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and initialize ALL installed servos.
