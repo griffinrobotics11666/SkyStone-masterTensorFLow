@@ -417,7 +417,8 @@ public class DriverControl extends OpMode {
     else
       robot.lift.setPower(0);
 
-    
+    robot.armMotor.setPower(leftStickX2);
+
 
 
 
