@@ -84,7 +84,7 @@ public class DriverControl extends OpMode {
   boolean RB2isPressed;
   boolean LB2isPressed;
   boolean B2isPressed;
-  boolean A2isPressed;
+  boolean A2isPressed = false;
   boolean Y2isPressed;
   boolean X2isPressed;
   boolean dPadUp2;
@@ -419,7 +419,10 @@ public class DriverControl extends OpMode {
 
     robot.armMotor.setPower(leftStickX2);
 
-
+    if(B2isPressed) {
+      robot.rightWheel.setPower(1);
+      robot.leftWheel.setPower(-1);
+  }
 
 
   }
