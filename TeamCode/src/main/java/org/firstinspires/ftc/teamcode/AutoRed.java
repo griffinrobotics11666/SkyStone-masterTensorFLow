@@ -28,6 +28,35 @@ public class AutoRed extends LinearOpMode {
         robot.rightBack.setPower(0);
 
     }
+    public void strafe(double distance, double speed) {
+        int newLeftFrontTarget;
+        int newRightBackTarget;
+        int newRightFrontTarget;
+        int newLeftBackTarget;
+        double strafeScale =(10000/98)*(10/9.25);
+
+        wheelSetMode(1);
+
+        newLeftFrontTarget = robot.leftFront.getCurrentPosition() + (int) (distance * strafeScale);
+        newLeftBackTarget = robot.leftBack.getCurrentPosition() - (int) (distance * strafeScale);
+        newRightFrontTarget = robot.rightFront.getCurrentPosition() + (int) (distance * strafeScale);
+        newRightBackTarget = robot.rightBack.getCurrentPosition() - (int) (distance * strafeScale);
+
+        robot.leftFront.setTargetPosition(newLeftFrontTarget);
+        robot.leftBack.setTargetPosition(newLeftBackTarget);
+        robot.rightFront.setTargetPosition(newRightFrontTarget);
+        robot.rightBack.setTargetPosition(newRightBackTarget);
+
+        robot.leftFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.leftBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.rightFront.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        robot.rightBack.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+        robot.leftFront.setPower(Math.abs(speed));
+        robot.rightFront.setPower(Math.abs(speed));
+        robot.leftBack.setPower(Math.abs(speed)); //-
+        robot.rightBack.setPower(Math.abs(speed)); //-
+    }
     public void wheelSetMode(int mode){
         robot.leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         robot.rightBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
