@@ -407,11 +407,14 @@ public class DriverControl extends OpMode {
         robot.rightClaw.setPosition(robot.rightclawopen);
       }
     }
-    //if(A1isPressed) {
-      //robot.rightWheelServo.setPosition(1);
-      //robot.leftWheelServo.setPosition(1);
-    //}
+
+    if(RT2 > 0) {
+      robot.lift.setPower(RT2);
+    }
+    else if(LT2 > 0){
+      robot.lift.setPower(-LT2);
+    }
+    else
+      robot.lift.setPower(0);
   }
-
-
 }

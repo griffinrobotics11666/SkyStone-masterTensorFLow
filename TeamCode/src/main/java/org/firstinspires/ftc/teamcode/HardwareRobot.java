@@ -131,6 +131,7 @@ public class   HardwareRobot
         armMotor.setDirection(DcMotor.Direction.FORWARD); //TODO CHECK THIS OR DIE
         rightWheel.setDirection(DcMotor.Direction.REVERSE);
         leftWheel.setDirection(DcMotor.Direction.FORWARD);
+        lift.setDirection(DcMotor.Direction.REVERSE); //TODO CHECK THIS OR DIE v.2
 
         // Set all motors to zero power
         leftFront.setPower(0);
@@ -138,6 +139,7 @@ public class   HardwareRobot
         leftBack.setPower(0);
         rightBack.setPower(0);
         armMotor.setPower(0);
+        lift.setPower(0);
         //        rightWheel.setPower(0);
 //        leftWheel.setPower(0);
 
@@ -150,6 +152,7 @@ public class   HardwareRobot
         armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and initialize ALL installed servos.
         leftClaw        = hwMap.get(Servo.class, "left_hand");
