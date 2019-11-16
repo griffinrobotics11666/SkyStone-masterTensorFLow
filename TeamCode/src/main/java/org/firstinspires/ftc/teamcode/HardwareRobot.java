@@ -91,8 +91,6 @@ public class   HardwareRobot
 
 
     public static final double MID_SERVO       =  .5;
-    //public static final double ARM_UP_POWER    =  0.45 ;
-    //public static final double ARM_DOWN_POWER  = -0.45 ;
     public double rightclawopen = .047;
     public double rightclawclose = 0;
     public double leftclawopen = .97;
