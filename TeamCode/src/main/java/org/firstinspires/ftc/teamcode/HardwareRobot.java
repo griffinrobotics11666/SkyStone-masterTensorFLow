@@ -70,9 +70,10 @@ public class   HardwareRobot
     public DcMotor leftBack    = null;
     public DcMotor rightBack   = null;
     public DcMotor armMotor    = null;
+    public DcMotor lift        = null;
     //Motors that move the wheels grabbing stones
-   // public DcMotor rightWheel  = null;
-   // public DcMotor leftWheel   = null;
+    public DcMotor rightWheel  = null;
+    public DcMotor leftWheel   = null;
     //Servos of the claw
     public Servo  leftClaw     = null;
     public Servo  rightClaw    = null;
@@ -82,6 +83,12 @@ public class   HardwareRobot
 //    //Servos that move the wheels grabbing stones
     public Servo rightWheelServo = null;
     public Servo leftWheelServo  = null;
+    //grab servos on the front
+    public Servo leftGrabServo = null;
+    public Servo rightGrabServo = null;
+
+
+
 
     public static final double MID_SERVO       =  .5;
     //public static final double ARM_UP_POWER    =  0.45 ;
@@ -114,15 +121,16 @@ public class   HardwareRobot
         leftBack   = hwMap.get(DcMotor.class, "left_back");
         rightBack  = hwMap.get(DcMotor.class, "right_back");
         armMotor   = hwMap.get(DcMotor.class, "arm_motor");
-//        rightWheel = hwMap.get(DcMotor.class, "right_wheel");
-//        leftWheel  = hwMap.get(DcMotor.class, "left_wheel");
+        rightWheel = hwMap.get(DcMotor.class, "intake_right");
+        leftWheel  = hwMap.get(DcMotor.class, "intake_left");
+        lift       = hwMap.get(DcMotor.class, "lift_motor");
         leftFront.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightFront.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         leftBack.setDirection(DcMotor.Direction.FORWARD);
         rightBack.setDirection(DcMotor.Direction.REVERSE);
         armMotor.setDirection(DcMotor.Direction.FORWARD); //TODO CHECK THIS OR DIE
-        //        rightWheel.setDirection(DcMotor.Direction.REVERSE);
-//        leftWheel.setDirection(DcMotor.Direction.FORWARD);
+        rightWheel.setDirection(DcMotor.Direction.REVERSE);
+        leftWheel.setDirection(DcMotor.Direction.FORWARD);
 
         // Set all motors to zero power
         leftFront.setPower(0);
@@ -140,8 +148,8 @@ public class   HardwareRobot
         leftBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         rightBack.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-        //        rightWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
-//        leftWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        rightWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        leftWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
 
         // Define and initialize ALL installed servos.
         leftClaw        = hwMap.get(Servo.class, "left_hand");
@@ -150,6 +158,8 @@ public class   HardwareRobot
         horizontalServo = hwMap.get(Servo.class, "x_servo");
         rightWheelServo = hwMap.get(Servo.class, "right_wheel_servo");
         leftWheelServo  = hwMap.get(Servo.class, "left_wheel_servo");
+        leftGrabServo   = hwMap.get(Servo.class, "left_grab");
+        rightGrabServo  = hwMap.get(Servo.class, "right_grab");
         leftClaw.setPosition(leftclawopen);
         rightClaw.setPosition(rightclawopen);
         verticalServo.setPosition(verticalClawGrab);
