@@ -33,7 +33,7 @@ public class AutoRed extends LinearOpMode {
         int newRightBackTarget;
         int newRightFrontTarget;
         int newLeftBackTarget;
-        double strafeScale =(10000/98)*(10/9.25);
+        double strafeScale =(10000.0/98.0);
 
         wheelSetMode(1);
 
