@@ -4,6 +4,7 @@ import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
     @TeleOp(name="debugMode", group="Auto")
 //    @Disabled
@@ -21,6 +22,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         boolean dPadRight1;
         boolean R3isPressed1;
         boolean L3isPressed1;
+        boolean isReverse;
 
         double RT1;
         double LT1;
@@ -58,7 +60,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
         public void init() {
             telemetry.addData("Status", "Initialized");
             robot.init(hardwareMap);
-
+            robot.leftWheel.setPower(1);
+            robot.rightWheel.setPower(1);
         }
 
         /*
@@ -84,47 +87,48 @@ import com.qualcomm.robotcore.util.ElapsedTime;
          */
         @Override
         public void loop() {
-            RB1isPressed  = gamepad1.right_bumper;
-            LB1isPressed  = gamepad1.left_bumper;
-            B1isPressed   = gamepad1.b;
-            A1isPressed   = gamepad1.a;
-            Y1isPressed   = gamepad1.y;
-            X1isPressed   = gamepad1.x;
-            dPadUp1       = gamepad1.dpad_up;
-            dPadDown1     = gamepad1.dpad_down;
-            dPadLeft1     = gamepad1.dpad_left;
-            dPadRight1    = gamepad1.dpad_right;
-            R3isPressed1  = gamepad1.right_stick_button;
-            L3isPressed1  = gamepad1.left_stick_button;
+            if(true) {
+                RB1isPressed = gamepad1.right_bumper;
+                LB1isPressed = gamepad1.left_bumper;
+                B1isPressed = gamepad1.b;
+                A1isPressed = gamepad1.a;
+                Y1isPressed = gamepad1.y;
+                X1isPressed = gamepad1.x;
+                dPadUp1 = gamepad1.dpad_up;
+                dPadDown1 = gamepad1.dpad_down;
+                dPadLeft1 = gamepad1.dpad_left;
+                dPadRight1 = gamepad1.dpad_right;
+                R3isPressed1 = gamepad1.right_stick_button;
+                L3isPressed1 = gamepad1.left_stick_button;
 
-            RT1            = gamepad1.right_trigger;
-            LT1            = gamepad1.left_trigger;
-            leftStickY1    = gamepad1.left_stick_y;
-            leftStickX1    = gamepad1.left_stick_x;
-            rightStickX1   = gamepad1.right_stick_x;
+                RT1 = gamepad1.right_trigger;
+                LT1 = gamepad1.left_trigger;
+                leftStickY1 = gamepad1.left_stick_y;
+                leftStickX1 = gamepad1.left_stick_x;
+                rightStickX1 = gamepad1.right_stick_x;
 
 
+                //gamepad2
+                RB2isPressed = gamepad2.right_bumper;
+                LB2isPressed = gamepad2.left_bumper;
+                B2isPressed = gamepad2.b;
+                A2isPressed = gamepad2.a;
+                Y2isPressed = gamepad2.y;
+                X2isPressed = gamepad2.x;
+                dPadUp2 = gamepad2.dpad_up;
+                dPadDown2 = gamepad2.dpad_down;
+                dPadLeft2 = gamepad2.dpad_left;
+                dPadRight2 = gamepad2.dpad_right;
+                R3isPressed2 = gamepad2.right_stick_button;
+                L3isPressed2 = gamepad2.left_stick_button;
 
-            //gamepad2
-            RB2isPressed = gamepad2.right_bumper;
-            LB2isPressed  = gamepad2.left_bumper;
-            B2isPressed   = gamepad2.b;
-            A2isPressed   = gamepad2.a;
-            Y2isPressed   = gamepad2.y;
-            X2isPressed   = gamepad2.x;
-            dPadUp2       = gamepad2.dpad_up;
-            dPadDown2     = gamepad2.dpad_down;
-            dPadLeft2     = gamepad2.dpad_left;
-            dPadRight2    = gamepad2.dpad_right;
-            R3isPressed2  = gamepad2.right_stick_button;
-            L3isPressed2  = gamepad2.left_stick_button;
-
-            RT2            = gamepad2.right_trigger;
-            LT2            = gamepad2.left_trigger;
-            leftStickY2    = gamepad2.left_stick_y;
-            leftStickX2    = gamepad2.left_stick_x;
-            rightStickY2   = gamepad2.right_stick_y;
-            rightStickX2   = gamepad2.right_stick_x;
+                RT2 = gamepad2.right_trigger;
+                LT2 = gamepad2.left_trigger;
+                leftStickY2 = gamepad2.left_stick_y;
+                leftStickX2 = gamepad2.left_stick_x;
+                rightStickY2 = gamepad2.right_stick_y;
+                rightStickX2 = gamepad2.right_stick_x;
+            }
 
             if(LB1isPressed) {
                 if (A1isPressed) {
@@ -180,8 +184,28 @@ import com.qualcomm.robotcore.util.ElapsedTime;
                     robot.verticalServo.setPosition(robot.verticalServo.getPosition() + movement);
                 }
             }
-            //right servo .288 (open) 1(close)
-            //left servo .68 (open) 0 (close)
+            if(dPadDown1){
+               if(isReverse){
+                   robot.rightWheel.setDirection(DcMotor.Direction.REVERSE);
+                   robot.leftWheel.setDirection(DcMotor.Direction.FORWARD);
+               }else{
+                   robot.leftWheel.setDirection(DcMotor.Direction.REVERSE);
+                   robot.rightWheel.setDirection(DcMotor.Direction.FORWARD);
+               }
+                isReverse = !isReverse;
+            }
+            if(RT2 != 0){
+                robot.lift.setPower(RT2);
+            }else if(LT2 != 0){
+                robot.lift.setPower(-LT2);
+            }else{
+                robot.lift.setPower(0);
+            }
+            //right servo .288 (open) 1(close)(TODO NEED NEW POSITIONS)
+            //left servo .68 (open) 0 (close) (TODO NEED NEW POSITIONS)
+
+            telemetry.addData("Right motor direction",robot.rightWheel.getDirection());
+            telemetry.addData("Left motor direction",robot.leftWheel.getDirection());
 
             telemetry.addData("Left servo",robot.leftWheelServo.getPosition());
 
