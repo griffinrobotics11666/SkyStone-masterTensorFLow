@@ -244,6 +244,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
             telemetry.addData("Right motor direction",robot.rightWheel.getDirection());
             telemetry.addData("Left motor direction",robot.leftWheel.getDirection());
+            telemetry.addData("right grab",robot.rightGrabServo.getPosition());
+            telemetry.addData("left grab",robot.leftGrabServo.getPosition());
 
             telemetry.addData("Left servo",robot.leftWheelServo.getPosition());
 

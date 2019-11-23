@@ -102,6 +102,10 @@ public class   HardwareRobot
     public double horizontalClawPlace = .12;
     public double verticalClawGrab = .68;
     public double verticalClawPlace = .03;
+    public double leftgrabopen = .23;
+    public double leftgrabclosed = 0;
+    public double rightgrabopen = .52;
+    public double rightgrabclose = .75;
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
@@ -133,7 +137,9 @@ public class   HardwareRobot
         armMotor.setDirection(DcMotor.Direction.FORWARD); //TODO CHECK THIS OR DIE
         rightWheel.setDirection(DcMotor.Direction.REVERSE);
         leftWheel.setDirection(DcMotor.Direction.FORWARD);
-        lift.setDirection(DcMotor.Direction.REVERSE); //TODO CHECK THIS OR DIE v.2
+        lift.setDirection(DcMotor.Direction.FORWARD); //TODO CHECK THIS OR DIE v.2
+        armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
+        lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
         // Set all motors to zero power
         leftFront.setPower(0);
@@ -168,6 +174,8 @@ public class   HardwareRobot
         leftClaw.setPosition(leftclawopen);
         rightClaw.setPosition(rightclawopen);
         verticalServo.setPosition(verticalClawGrab);
+        rightGrabServo.setPosition(rightgrabopen);
+        leftGrabServo.setPosition(leftgrabopen);
         //horizontalServo.setPosition(horizontalClawGrab);
         leftWheelServo.setPosition(0);
         rightWheelServo.setPosition(1);
