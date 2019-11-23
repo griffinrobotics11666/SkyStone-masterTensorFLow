@@ -391,17 +391,17 @@ public class DriverControl extends OpMode {
     }
     if(A2isPressed){
       if(Math.abs(robot.rightClaw.getPosition() - robot.rightclawclose) < .05) {
-        while (Math.abs(robot.horizontalServo.getPosition() - robot.horizontalClawGrab) > .001 && Math.abs(robot.verticalServo.getPosition() - robot.verticalClawGrab) > .001) {
+        while (/*Math.abs(robot.horizontalServo.getPosition() - robot.horizontalClawGrab) > .001 &&*/ Math.abs(robot.verticalServo.getPosition() - robot.verticalClawGrab) > .001) {
           robot.verticalServo.setPosition(robot.verticalClawGrab);
-          robot.horizontalServo.setPosition(robot.horizontalClawGrab);
+          //robot.horizontalServo.setPosition(robot.horizontalClawGrab);
         }
         robot.leftClaw.setPosition(robot.leftclawclose);
         robot.rightClaw.setPosition(robot.rightclawclose);
       }
       else{
-        while (Math.abs(robot.horizontalServo.getPosition() - robot.horizontalClawPlace) > .001 && Math.abs(robot.verticalServo.getPosition() - robot.verticalClawPlace) > .001) {
+        while (/*Math.abs(robot.horizontalServo.getPosition() - robot.horizontalClawPlace) > .001 &&*/ Math.abs(robot.verticalServo.getPosition() - robot.verticalClawPlace) > .001) {
           robot.verticalServo.setPosition(robot.verticalClawPlace);
-          robot.horizontalServo.setPosition(robot.horizontalClawPlace);
+          //robot.horizontalServo.setPosition(robot.horizontalClawPlace);
         }
         robot.leftClaw.setPosition(robot.leftclawopen);
         robot.rightClaw.setPosition(robot.rightclawopen);

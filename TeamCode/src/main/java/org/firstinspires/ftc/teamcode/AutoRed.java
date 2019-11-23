@@ -258,6 +258,7 @@ public class AutoRed extends LinearOpMode {
 
         waitForStart();
         runtime.reset();
+        strafe(12,1);
 //        gyroMove(8*12,1);
 //        sleep(5000);
 //

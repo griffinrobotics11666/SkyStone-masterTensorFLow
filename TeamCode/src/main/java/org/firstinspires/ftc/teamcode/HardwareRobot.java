@@ -34,6 +34,7 @@ import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
@@ -79,13 +80,15 @@ public class   HardwareRobot
     public Servo  rightClaw    = null;
     //servos that twist the claw
     public Servo verticalServo   = null;
-    public Servo horizontalServo = null;
+    //public Servo horizontalServo = null;
 //    //Servos that move the wheels grabbing stones
     public Servo rightWheelServo = null;
     public Servo leftWheelServo  = null;
     //grab servos on the front
     public Servo leftGrabServo = null;
     public Servo rightGrabServo = null;
+
+    public NormalizedColorSensor colorSensor;
 
 
 
@@ -124,6 +127,7 @@ public class   HardwareRobot
         rightWheel = hwMap.get(DcMotor.class, "intake_right");
         leftWheel  = hwMap.get(DcMotor.class, "intake_left");
         lift       = hwMap.get(DcMotor.class, "lift_motor");
+        colorSensor = hwMap.get(NormalizedColorSensor.class, "sensor_color");
         leftFront.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightFront.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         leftBack.setDirection(DcMotor.Direction.FORWARD);
@@ -158,7 +162,7 @@ public class   HardwareRobot
         leftClaw        = hwMap.get(Servo.class, "left_hand");
         rightClaw       = hwMap.get(Servo.class, "right_hand");
         verticalServo   = hwMap.get(Servo.class, "y_servo");
-        horizontalServo = hwMap.get(Servo.class, "x_servo");
+        //horizontalServo = hwMap.get(Servo.class, "x_servo");
         rightWheelServo = hwMap.get(Servo.class, "right_wheel_servo");
         leftWheelServo  = hwMap.get(Servo.class, "left_wheel_servo");
         leftGrabServo   = hwMap.get(Servo.class, "left_grab");
@@ -166,7 +170,7 @@ public class   HardwareRobot
         leftClaw.setPosition(leftclawopen);
         rightClaw.setPosition(rightclawopen);
         verticalServo.setPosition(verticalClawGrab);
-        horizontalServo.setPosition(horizontalClawGrab);
+        //horizontalServo.setPosition(horizontalClawGrab);
         leftWheelServo.setPosition(0);
         rightWheelServo.setPosition(1);
 
