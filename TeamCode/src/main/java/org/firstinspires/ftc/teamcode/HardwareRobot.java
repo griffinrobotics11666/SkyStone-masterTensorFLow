@@ -94,10 +94,10 @@ public class   HardwareRobot
 
 
     public static final double MID_SERVO       =  .5;
-    public double rightclawopen = .047;
+    public double rightclawopen = .1;
     public double rightclawclose = 0;
-    public double leftclawopen = .97;
-    public double leftclawclose = .94;
+    public double leftclawopen = .95;
+    public double leftclawclose = 1;
     public double horizontalClawGrab = .68;
     public double horizontalClawPlace = .12;
     public double verticalClawGrab = .68;
@@ -106,6 +106,10 @@ public class   HardwareRobot
     public double leftgrabclosed = 0;
     public double rightgrabopen = .52;
     public double rightgrabclose = .75;
+    public double rightintakeservostow =1;
+    public double rightintakeservograb = .27;
+    public double leftintakeservostow = 0;
+    public double leftintakeservograb = .77;
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
@@ -177,8 +181,8 @@ public class   HardwareRobot
         rightGrabServo.setPosition(rightgrabopen);
         leftGrabServo.setPosition(leftgrabopen);
         //horizontalServo.setPosition(horizontalClawGrab);
-        leftWheelServo.setPosition(0);
-        rightWheelServo.setPosition(1);
+        leftWheelServo.setPosition(leftintakeservograb);
+        rightWheelServo.setPosition(rightintakeservograb );
 
 
         //Gyro

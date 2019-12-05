@@ -54,8 +54,12 @@ public class AutoRed extends LinearOpMode {
 
         robot.leftFront.setPower(Math.abs(speed));
         robot.rightFront.setPower(Math.abs(speed));
-        robot.leftBack.setPower(Math.abs(speed)); //-
-        robot.rightBack.setPower(Math.abs(speed)); //-
+        robot.leftBack.setPower(-Math.abs(speed)); //-
+        robot.rightBack.setPower(-Math.abs(speed)); //-
+
+        while (robot.leftBack.isBusy() && robot.leftFront.isBusy() && robot.rightFront.isBusy() && robot.rightBack.isBusy()){
+
+        }
     }
     public void wheelSetMode(int mode){
         robot.leftBack.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
