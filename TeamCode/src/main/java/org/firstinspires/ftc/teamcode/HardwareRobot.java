@@ -37,6 +37,7 @@ import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 
 import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
@@ -88,28 +89,30 @@ public class   HardwareRobot
     public Servo leftGrabServo = null;
     public Servo rightGrabServo = null;
 
-    public NormalizedColorSensor colorSensor;
+    public ColorSensor colorSensor;
 
 
 
 
     public static final double MID_SERVO       =  .5;
-    public double rightclawopen = .1;
-    public double rightclawclose = 0;
-    public double leftclawopen = .95;
-    public double leftclawclose = 1;
-    public double horizontalClawGrab = .68;
-    public double horizontalClawPlace = .12;
+    public double rightclawopen = .105;
+    public double rightclawclose = 0.06;
+    public double leftclawopen = .9172;
+    public double leftclawclose = .96;
+//    public double horizontalClawGrab = .68;
+//    public double horizontalClawPlace = .12;
     public double verticalClawGrab = .68;
     public double verticalClawPlace = .03;
     public double leftgrabopen = .23;
-    public double leftgrabclosed = 0;
+    public double leftgrabclosed = .76;
     public double rightgrabopen = .52;
-    public double rightgrabclose = .75;
-    public double rightintakeservostow =1;
+    public double rightgrabclose = .016 ;
+    public double rightintakeservostow =.126;
     public double rightintakeservograb = .27;
-    public double leftintakeservostow = 0;
+    public double leftintakeservostow = .92;
     public double leftintakeservograb = .77;
+    public double leftintakeopen = .5916;
+    public double rightintakeopen = .4305;
     /* local OpMode members. */
     HardwareMap hwMap           =  null;
     private ElapsedTime period  = new ElapsedTime();
@@ -120,7 +123,7 @@ public class   HardwareRobot
     }
 
     /* Initialize standard Hardware interfaces */
-    public void init(HardwareMap ahwMap) {
+    public void init(HardwareMap ahwMap){
         // Save reference to Hardware map
         hwMap = ahwMap;
 
@@ -133,7 +136,7 @@ public class   HardwareRobot
         rightWheel = hwMap.get(DcMotor.class, "intake_right");
         leftWheel  = hwMap.get(DcMotor.class, "intake_left");
         lift       = hwMap.get(DcMotor.class, "lift_motor");
-        colorSensor = hwMap.get(NormalizedColorSensor.class, "sensor_color");
+        colorSensor = hwMap.get(ColorSensor.class, "sensor_color");
         leftFront.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightFront.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         leftBack.setDirection(DcMotor.Direction.FORWARD);
@@ -141,7 +144,7 @@ public class   HardwareRobot
         armMotor.setDirection(DcMotor.Direction.FORWARD); //TODO CHECK THIS OR DIE
         rightWheel.setDirection(DcMotor.Direction.REVERSE);
         leftWheel.setDirection(DcMotor.Direction.FORWARD);
-        lift.setDirection(DcMotor.Direction.FORWARD); //TODO CHECK THIS OR DIE v.2
+        lift.setDirection(DcMotor.Direction.REVERSE); //TODO CHECK THIS OR DIE v.2
         armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
@@ -155,6 +158,7 @@ public class   HardwareRobot
         //        rightWheel.setPower(0);
 //        leftWheel.setPower(0);
 
+
         // Set all motors to run without encoders.
         // May want to use RUN_USING_ENCODERS if encoders are installed.
         leftFront.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
@@ -165,6 +169,8 @@ public class   HardwareRobot
         rightWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         leftWheel.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
         lift.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+        armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER );
 
         // Define and initialize ALL installed servos.
         leftClaw        = hwMap.get(Servo.class, "left_hand");
@@ -177,12 +183,13 @@ public class   HardwareRobot
         rightGrabServo  = hwMap.get(Servo.class, "right_grab");
         leftClaw.setPosition(leftclawopen);
         rightClaw.setPosition(rightclawopen);
-        verticalServo.setPosition(verticalClawGrab);
+        verticalServo.setPosition(verticalClawPlace);
         rightGrabServo.setPosition(rightgrabopen);
         leftGrabServo.setPosition(leftgrabopen);
         //horizontalServo.setPosition(horizontalClawGrab);
-        leftWheelServo.setPosition(leftintakeservograb);
-        rightWheelServo.setPosition(rightintakeservograb );
+        leftWheelServo.setPosition(leftintakeservostow);
+        rightWheelServo.setPosition(rightintakeservostow);
+//        rightClaw.setDirection(Servo.Direction.REVERSE);
 
 
         //Gyro
@@ -201,4 +208,3 @@ public class   HardwareRobot
         imu.initialize(parameters);
     }
  }
-

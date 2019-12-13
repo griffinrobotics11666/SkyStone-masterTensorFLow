@@ -53,58 +53,60 @@ public class DriverControl extends OpMode {
 
     private ElapsedTime runtime = new ElapsedTime();
 
-    double openServoL;
-    double openServoR;
-    double closedServoL;
-    double closedServoR;
-
-    //gamepad1
-    boolean RB1isPressed;
-    boolean LB1isPressed;
-    boolean B1isPressed;
-    boolean A1isPressed;
-    boolean Y1isPressed;
-    boolean X1isPressed;
-    boolean dPadUp1;
-    boolean dPadDown1;
-    boolean dPadLeft1;
-    boolean dPadRight1;
-    boolean R3isPressed1;
-    boolean L3isPressed1;
-
-    double RT1;
-    double LT1;
-    double leftStickY1;
-    double leftStickX1;
-    double rightStickX1;
+//    double openServoL;
+//    double openServoR;
+//    double closedServoL;
+//    double closedServoR;
+//
+//    //gamepad1
+//    boolean RB1isPressed;
+//    boolean LB1isPressed;
+//    boolean B1isPressed;
+//    boolean A1isPressed;
+//    boolean Y1isPressed;
+//    boolean X1isPressed;
+//    boolean dPadUp1;
+//    boolean dPadDown1;
+//    boolean dPadLeft1;
+//    boolean dPadRight1;
+//    boolean R3isPressed1;
+//    boolean L3isPressed1;
+//
+//    double RT1;
+//    double LT1;
+//    double leftStickY1;
+//    double leftStickX1;
+//    double rightStickX1;
     double leftPower;
     double rightPower;
-
-    //gamepad2
-    boolean RB2isPressed;
-    boolean LB2isPressed;
-    boolean B2isPressed;
-    boolean A2isPressed = false;
-    boolean Y2isPressed;
-    boolean X2isPressed;
-    boolean dPadUp2;
-    boolean dPadDown2;
-    boolean dPadLeft2;
-    boolean dPadRight2;
-    boolean R3isPressed2;
-    boolean L3isPressed2;
-
-    double RT2;
-    double LT2;
-    double leftStickY2;
-    double leftStickX2;
-    double rightStickY2;
-    double rightStickX2;
+//
+//    //gamepad2
+//    boolean RB2isPressed;
+//    boolean LB2isPressed;
+//    boolean B2isPressed;
+//    boolean A2isPressed = false;
+//    boolean Y2isPressed;
+//    boolean X2isPressed;
+//    boolean dPadUp2;
+//    boolean dPadDown2;
+//    boolean dPadLeft2;
+//    boolean dPadRight2;
+//    boolean R3isPressed2;
+//    boolean L3isPressed2;
+//
+//    double RT2;
+//    double LT2;
+//    double leftStickY2;
+//    double leftStickX2;
+//    double rightStickY2;
+//    double rightStickX2;
 
     boolean isgrab = false, isgrabchanged = false;
     boolean isVerticalgrab = false, isVerticalchanged = false;
     boolean isArmGrab = false, isArmchanged = false;
     boolean isintakeexpanded = false, isintakechanged = false;
+
+
     public void gyroMove(double distance, double speed) {
         double WHEEL_DIAMETER = 4;
         double WHEEL_CIRCUMFERENCE = Math.PI * WHEEL_DIAMETER;
@@ -287,115 +289,115 @@ public class DriverControl extends OpMode {
         telemetry.addData("Status", "Run Time: " + runtime.toString());
 
         //gamepad1
-        RB1isPressed  = gamepad1.right_bumper;
-        LB1isPressed  = gamepad1.left_bumper;
-        B1isPressed   = gamepad1.b;// front grabby servos
-        A1isPressed   = gamepad1.a;//turn if wanted to
-        Y1isPressed   = gamepad1.y;//change direction of intake while held
-        X1isPressed   = gamepad1.x;
-        dPadUp1       = gamepad1.dpad_up;
-        dPadDown1     = gamepad1.dpad_down;
-        dPadLeft1     = gamepad1.dpad_left;
-        dPadRight1    = gamepad1.dpad_right;
-        R3isPressed1  = gamepad1.right_stick_button;
-        L3isPressed1  = gamepad1.left_stick_button;
+//        RB1isPressed  = gamepad1.right_bumper;
+//        LB1isPressed  = gamepad1.left_bumper;
+//        B1isPressed   = gamepad1.b;// front grabby servos
+//        A1isPressed   = gamepad1.a;//turn if wanted to
+//        Y1isPressed   = gamepad1.y;//change direction of intake while held
+//        X1isPressed   = gamepad1.x;
+//        dPadUp1       = gamepad1.dpad_up;
+//        dPadDown1     = gamepad1.dpad_down;
+//        dPadLeft1     = gamepad1.dpad_left;
+//        dPadRight1    = gamepad1.dpad_right;
+//        R3isPressed1  = gamepad1.right_stick_button;
+//        L3isPressed1  = gamepad1.left_stick_button;
+//
+//        RT1            = gamepad1.right_trigger;
+//        LT1            = gamepad1.left_trigger;
+//        leftStickY1    = gamepad1.left_stick_y;//foward movement
+//        leftStickX1    = gamepad1.left_stick_x;//turn the robot
+//        rightStickX1   = gamepad1.right_stick_x;//strafe the robot
+//
+//        //gamepad2
+//        RB2isPressed  = gamepad2.right_bumper;
+//        LB2isPressed  = gamepad2.left_bumper;
+//        B2isPressed   = gamepad2.b;//open/close the claw
+//        A2isPressed   = gamepad2.a;//flip the claw's side
+//        Y2isPressed   = gamepad2.y;
+//        X2isPressed   = gamepad2.x;
+//        dPadUp2       = gamepad2.dpad_up;
+//        dPadDown2     = gamepad2.dpad_down;
+//        dPadLeft2     = gamepad2.dpad_left;
+//        dPadRight2    = gamepad2.dpad_right;
+//        R3isPressed2  = gamepad2.right_stick_button;
+//        L3isPressed2  = gamepad2.left_stick_button;
+//
+//        RT2            = gamepad2.right_trigger;//raise the lift
+//        LT2            = gamepad2.left_trigger;//lower the life
+//        leftStickY2    = gamepad2.left_stick_y;
+//        leftStickX2    = gamepad2.left_stick_x;//rotate the arm
+//        rightStickY2   = gamepad2.right_stick_y;
+//        rightStickX2   = gamepad2.right_stick_x;
 
-        RT1            = gamepad1.right_trigger;
-        LT1            = gamepad1.left_trigger;
-        leftStickY1    = gamepad1.left_stick_y;//foward movement
-        leftStickX1    = gamepad1.left_stick_x;//turn the robot
-        rightStickX1   = gamepad1.right_stick_x;//strafe the robot
-
-        //gamepad2
-        RB2isPressed  = gamepad2.right_bumper;
-        LB2isPressed  = gamepad2.left_bumper;
-        B2isPressed   = gamepad2.b;//open/close the claw
-        A2isPressed   = gamepad2.a;//flip the claw's side
-        Y2isPressed   = gamepad2.y;
-        X2isPressed   = gamepad2.x;
-        dPadUp2       = gamepad2.dpad_up;
-        dPadDown2     = gamepad2.dpad_down;
-        dPadLeft2     = gamepad2.dpad_left;
-        dPadRight2    = gamepad2.dpad_right;
-        R3isPressed2  = gamepad2.right_stick_button;
-        L3isPressed2  = gamepad2.left_stick_button;
-
-        RT2            = gamepad2.right_trigger;//raise the lift
-        LT2            = gamepad2.left_trigger;//lower the life
-        leftStickY2    = gamepad2.left_stick_y;
-        leftStickX2    = gamepad2.left_stick_x;//rotate the arm
-        rightStickY2   = gamepad2.right_stick_y;
-        rightStickX2   = gamepad2.right_stick_x;
-
-        leftPower = Range.clip(-leftStickY1 + leftStickX1, -1.0, 1.0);
-        rightPower = Range.clip(-leftStickY1 - leftStickX1, -1.0, 1.0);
+        leftPower = Range.clip(-gamepad1.left_stick_y + gamepad1.left_stick_x, -1.0, 1.0);
+        rightPower = Range.clip(-gamepad1.left_stick_y - gamepad1.left_stick_x, -1.0, 1.0);
 
 
-        robot.leftFront.setPower(leftPower);
-        robot.rightFront.setPower(rightPower);
-        robot.leftBack.setPower(leftPower);
-        robot.rightBack.setPower(rightPower);
+        robot.leftFront.setPower(leftPower + gamepad1.right_stick_x);
+        robot.rightFront.setPower(rightPower -gamepad1.right_stick_x);
+        robot.leftBack.setPower(leftPower-gamepad1.right_stick_x);
+        robot.rightBack.setPower(rightPower+gamepad1.right_stick_x);
 
 
         //toggles the opening and closing of the front servos
-          if(B1isPressed && !isgrabchanged){
+          if(gamepad1.b && !isgrabchanged){
             robot.leftGrabServo.setPosition(isgrab ? robot.leftgrabopen : robot.leftgrabclosed);
             robot.rightGrabServo.setPosition(isgrab ? robot.rightgrabopen : robot.rightgrabclose);
             isgrab = !isgrab;
             isgrabchanged = true;
-        }else if(!B1isPressed)isgrabchanged = false;
+        }else if(!gamepad1.b)isgrabchanged = false;
 
 
-        else if (rightStickX1 != 0){
-            robot.leftFront.setPower(rightStickX1);
-            robot.rightFront.setPower(-rightStickX1);
-            robot.leftBack.setPower(-rightStickX1);
-            robot.rightBack.setPower(rightStickX1);
-        }
-        else{
-            robot.leftFront.setPower(0);
-            robot.rightFront.setPower(0);
-            robot.leftBack.setPower(0);
-            robot.rightBack.setPower(0);
-        }
-        if(A1isPressed){
+//        else if (rightStickX1 != 0){
+//            robot.leftFront.setPower(rightStickX1);
+//            robot.rightFront.setPower(-rightStickX1);
+//            robot.leftBack.setPower(-rightStickX1);
+//            robot.rightBack.setPower(rightStickX1);
+//        }
+//        else{
+//            robot.leftFront.setPower(0);
+//            robot.rightFront.setPower(0);
+//            robot.leftBack.setPower(0);
+//            robot.rightBack.setPower(0);
+//        }
+        if(gamepad1.a){
             turn(90,1);
         }
 
         //Toggles the hand flip
-        if(A2isPressed && !isVerticalchanged){
-            robot.verticalServo.setPosition(isVerticalgrab ? robot.verticalClawGrab : robot.verticalClawPlace);
+        if(gamepad2.a && !isVerticalchanged){
+            robot.verticalServo.setPosition(isVerticalgrab ? robot.verticalClawPlace : robot.verticalClawGrab);
             isVerticalgrab = !isVerticalgrab;
             isVerticalchanged = true;
         }
-        else if(!A2isPressed)isVerticalchanged = false;
+        else if(!gamepad2.a)isVerticalchanged = false;
         //toggles the hand opening and closing
-        if(B2isPressed && !isArmchanged) {
+        if(gamepad2.b && !isArmchanged) {
             robot.rightClaw.setPosition(isArmGrab ? robot.rightclawclose:robot.rightclawopen);
-            robot.rightClaw.setPosition(isArmGrab ? robot.leftclawclose:robot.leftclawopen);
+            robot.leftClaw.setPosition(isArmGrab ? robot.leftclawclose:robot.leftclawopen);
             isArmGrab = !isArmGrab;
             isArmchanged = true;
-        }else if(!B2isPressed){isArmchanged = false;}
+        }else if(!gamepad2.b){isArmchanged = false;}
 
-        if(X1isPressed && !isintakechanged){
-            robot.rightWheelServo.setPosition(isintakeexpanded ? robot.rightintakeservograb:robot.rightintakeservograb + .05);
-            robot.leftWheelServo.setPosition(isintakeexpanded ? robot.leftintakeservograb:robot.leftintakeservograb - .05);
+        if(gamepad1.x && !isintakechanged){
+            robot.rightWheelServo.setPosition(isintakeexpanded ? robot.rightintakeservograb:robot.rightintakeopen);
+            robot.leftWheelServo.setPosition(isintakeexpanded ? robot.leftintakeservograb:robot.leftintakeopen);
             isintakeexpanded = !isintakeexpanded;
             isintakechanged = true;
-        }else if (!X1isPressed){isintakechanged = false;}
+        }else if (!gamepad1.x){isintakechanged = false;}
 
-        if(RT2 > 0) {
-            robot.lift.setPower(RT2);
+        if(gamepad2.right_trigger > 0) {
+            robot.lift.setPower(gamepad2.right_trigger);
         }
-        else if(LT2 > 0){
-            robot.lift.setPower(-LT2);
+        else if(gamepad2.left_trigger > 0){
+            robot.lift.setPower(-gamepad2.left_trigger);
         }
         else
             robot.lift.setPower(0);
 
-        robot.armMotor.setPower(leftStickX2);
+        robot.armMotor.setPower(gamepad2.left_stick_y);
 
-        if(Y1isPressed) {
+        if(gamepad1.y) {
             robot.rightWheel.setPower(-1);
             robot.leftWheel.setPower(-1);
         }else{

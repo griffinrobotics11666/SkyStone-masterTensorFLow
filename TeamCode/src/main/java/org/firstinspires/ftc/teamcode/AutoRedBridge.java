@@ -1,24 +1,22 @@
 package org.firstinspires.ftc.teamcode;
 
-import com.qualcomm.hardware.bosch.BNO055IMU;
-import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
+import android.graphics.Color;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
-import org.firstinspires.ftc.robotcore.external.navigation.Acceleration;
 import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
-import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
-@Autonomous(name="Autonomous Red", group="Auto")
+@Autonomous(name="Autonomous Red (Wall)", group="Auto")
 //@Disabled
-public class AutoRed extends LinearOpMode {
+public class AutoRedBridge extends LinearOpMode {
     HardwareRobot robot = new HardwareRobot();
+    float hsvValues[] = {0F, 0F, 0F};
+    final double SCALE_FACTOR = 255;
     public void stopRobot() {
         wheelSetMode(2);
 
@@ -28,19 +26,40 @@ public class AutoRed extends LinearOpMode {
         robot.rightBack.setPower(0);
 
     }
+    public void strafeToLine(boolean isLeft, double speed){
+        wheelSetMode(2);
+        Color.RGBToHSV((int) (robot.colorSensor.red() * SCALE_FACTOR),
+                (int) (robot.colorSensor.green() * SCALE_FACTOR),
+                (int) (robot.colorSensor.blue() * SCALE_FACTOR),
+                hsvValues);
+        while(Math.abs(robot.colorSensor.red() - robot.colorSensor.blue()) < 200){
+            if(!isLeft) {
+                robot.leftFront.setPower(speed);
+                robot.rightFront.setPower(-speed);
+                robot.leftBack.setPower(-speed);
+                robot.rightBack.setPower(speed);
+            }else{
+                robot.leftFront.setPower(-speed);
+                robot.rightFront.setPower(speed);
+                robot.leftBack.setPower(speed);
+                robot.rightBack.setPower(-speed);
+            }
+        }
+        stopRobot();
+    }
     public void strafe(double distance, double speed) {
         int newLeftFrontTarget;
         int newRightBackTarget;
         int newRightFrontTarget;
         int newLeftBackTarget;
-        double strafeScale =(10000.0/98.0);
+        double strafeScale =(10000.0/98.0) * (24.0/27.0) * (24.0/27.0);
 
         wheelSetMode(1);
 
         newLeftFrontTarget = robot.leftFront.getCurrentPosition() + (int) (distance * strafeScale);
         newLeftBackTarget = robot.leftBack.getCurrentPosition() - (int) (distance * strafeScale);
-        newRightFrontTarget = robot.rightFront.getCurrentPosition() + (int) (distance * strafeScale);
-        newRightBackTarget = robot.rightBack.getCurrentPosition() - (int) (distance * strafeScale);
+        newRightFrontTarget = robot.rightFront.getCurrentPosition() - (int) (distance * strafeScale);
+        newRightBackTarget = robot.rightBack.getCurrentPosition() + (int) (distance * strafeScale);
 
         robot.leftFront.setTargetPosition(newLeftFrontTarget);
         robot.leftBack.setTargetPosition(newLeftBackTarget);
@@ -54,8 +73,8 @@ public class AutoRed extends LinearOpMode {
 
         robot.leftFront.setPower(Math.abs(speed));
         robot.rightFront.setPower(Math.abs(speed));
-        robot.leftBack.setPower(-Math.abs(speed)); //-
-        robot.rightBack.setPower(-Math.abs(speed)); //-
+        robot.leftBack.setPower(Math.abs(speed)); //-
+        robot.rightBack.setPower(Math.abs(speed)); //-
 
         while (robot.leftBack.isBusy() && robot.leftFront.isBusy() && robot.rightFront.isBusy() && robot.rightBack.isBusy()){
 
@@ -262,7 +281,36 @@ public class AutoRed extends LinearOpMode {
 
         waitForStart();
         runtime.reset();
-        strafe(12,1);
+
+//        strafeToLine(true ,.7);
+
+        gyroMove(24*2 - 18-3,1);
+        gyroMove(3,.5);
+        gyroMove(3,.3);
+        robot.rightGrabServo.setPosition(robot.rightgrabclose);
+        robot.leftGrabServo.setPosition(robot.leftgrabclosed);
+        sleep(1000);
+        gyroMove(-24*2 + 18,1);
+        gyroMove(-9,.5);
+        robot.rightGrabServo.setPosition(robot.rightgrabopen);
+        robot.leftGrabServo.setPosition(robot.leftgrabopen);
+        strafe(-18 - 5 ,1);
+        gyroMove(12*2 - 5,1);
+        strafe(24,1);
+        strafeToLine(true,.6);
+
+
+
+//        strafe(12*2 ,.5);
+//        sleep(500);
+//        robot.rightGrabServo.setPosition(robot.rightgrabclose);
+//        robot.leftGrabServo.setPosition(robot.leftgrabclosed);
+//        sleep(2000);
+//        robot.rightGrabServo.setPosition(robot.rightgrabopen);
+//        robot.leftGrabServo.setPosition(robot.leftgrabopen);
+//        sleep(2000);
+
+//        strafe(12,1);
 //        gyroMove(8*12,1);
 //        sleep(5000);
 //
