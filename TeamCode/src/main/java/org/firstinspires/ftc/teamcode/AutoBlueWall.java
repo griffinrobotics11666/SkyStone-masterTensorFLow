@@ -282,7 +282,7 @@ public class AutoBlueWall extends LinearOpMode {
         runtime.reset();
 
 //        strafeToLine(true ,.7);
-
+/*
         gyroMove(24*2 - 18-3,1);
         gyroMove(3,.5);
         gyroMove(3,.3);
@@ -299,5 +299,18 @@ public class AutoBlueWall extends LinearOpMode {
         strafeToLine(false,.6);
         gyroMove(-12*3 + 9,1);
 
+*/
+        strafe(-9,.5);
+        gyroMove(24*2 - 18-3,1);
+        gyroMove(3,.5);
+        gyroMove(3,.3);
+        robot.rightGrabServo.setPosition(robot.rightgrabclose);
+        robot.leftGrabServo.setPosition(robot.leftgrabclosed);
+        sleep(1000);
+        gyroMove(-24*2 + 18,1);
+        gyroMove(-9,.5);
+        robot.rightGrabServo.setPosition(robot.rightgrabopen);
+        robot.leftGrabServo.setPosition(robot.leftgrabopen);
+        strafe(48 ,1);
     }
 }

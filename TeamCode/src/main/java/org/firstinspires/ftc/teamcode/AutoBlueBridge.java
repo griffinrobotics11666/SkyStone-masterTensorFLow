@@ -284,7 +284,7 @@ public class AutoBlueBridge extends LinearOpMode {
         runtime.reset();
 
 //        strafeToLine(true ,.7);
-
+/*
         gyroMove(24*2 - 18-3,1);
         gyroMove(3,.5);
         gyroMove(3,.3);
@@ -299,6 +299,7 @@ public class AutoBlueBridge extends LinearOpMode {
         gyroMove(12*2 - 5,1);
         strafe(-24,1);
         strafeToLine(false,.6);
+*/
 
     }
 }

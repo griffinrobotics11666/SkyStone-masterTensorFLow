@@ -144,7 +144,7 @@ public class   HardwareRobot
         armMotor.setDirection(DcMotor.Direction.FORWARD); //TODO CHECK THIS OR DIE
         rightWheel.setDirection(DcMotor.Direction.REVERSE);
         leftWheel.setDirection(DcMotor.Direction.FORWARD);
-        lift.setDirection(DcMotor.Direction.REVERSE); //TODO CHECK THIS OR DIE v.2
+        lift.setDirection(DcMotor.Direction.FORWARD); //TODO CHECK THIS OR DIE v.2
         armMotor.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
         lift.setZeroPowerBehavior(DcMotor.ZeroPowerBehavior.BRAKE);
 
