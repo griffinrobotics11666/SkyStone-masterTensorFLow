@@ -169,7 +169,8 @@ import java.util.Locale;
                 if (gamepad2.y) {
                     robot.leftClaw.setPosition(robot.leftClaw.getPosition() + movement);
                 }
-            }else{
+            }
+            else{
 //                if (A2isPressed) {
 //                    robot.horizontalServo.setPosition(robot.horizontalServo.getPosition() - movement);
 //                }
@@ -228,7 +229,7 @@ import java.util.Locale;
             //right servo .288 (open) 1(close)(TODO NEED NEW POSITIONS)
             //left servo .68 (open) 0 (close) (TODO NEED NEW POSITIONS)
 
-
+/*
             Color.RGBToHSV((int) (robot.colorSensor.red() * SCALE_FACTOR),
                     (int) (robot.colorSensor.green() * SCALE_FACTOR),
                     (int) (robot.colorSensor.blue() * SCALE_FACTOR),
@@ -247,6 +248,7 @@ import java.util.Locale;
             telemetry.addData("Red  ", avgRed);
             telemetry.addData("Green", robot.colorSensor.green());
             telemetry.addData("Blue ", avgBlue);
+*/
 
             telemetry.addData("Right intake motor direction (DPAD DOWN) GAMEPAD 1",robot.rightWheel.getDirection());
             telemetry.addData("Left intake motor direction (DPAD DOWN) GAMEPAD 1",robot.leftWheel.getDirection());
