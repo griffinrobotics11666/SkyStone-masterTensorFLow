@@ -15,9 +15,9 @@ import org.firstinspires.ftc.robotcore.external.navigation.DistanceUnit;
 import java.util.Locale;
 
 @TeleOp(name="debugMode", group="Auto")
-//    @Disabled
+    @Disabled
  public class debug extends OpMode {
-        double movement = .0005;
+        double movement = .005;
 //        boolean RB1isPressed;
 //        boolean LB1isPressed;
 //        boolean B1isPressed;

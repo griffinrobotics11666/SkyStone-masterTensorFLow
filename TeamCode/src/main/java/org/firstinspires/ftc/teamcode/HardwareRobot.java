@@ -33,6 +33,7 @@ import com.qualcomm.hardware.bosch.BNO055IMU;
 import com.qualcomm.hardware.bosch.JustLoggingAccelerationIntegrator;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
+import com.qualcomm.robotcore.hardware.DigitalChannel;
 import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.Servo;
@@ -88,6 +89,7 @@ public class   HardwareRobot
     //grab servos on the front
     public Servo leftGrabServo = null;
     public Servo rightGrabServo = null;
+    public DigitalChannel magSwitch = null;
 
     public ColorSensor colorSensor;
 
@@ -137,6 +139,8 @@ public class   HardwareRobot
         leftWheel  = hwMap.get(DcMotor.class, "intake_left");
         lift       = hwMap.get(DcMotor.class, "lift_motor");
         colorSensor = hwMap.get(ColorSensor.class, "sensor_color");
+        magSwitch = hwMap.get(DigitalChannel.class, "mag_touch");
+
         leftFront.setDirection(DcMotor.Direction.FORWARD); // Set to REVERSE if using AndyMark motors
         rightFront.setDirection(DcMotor.Direction.REVERSE);// Set to FORWARD if using AndyMark motors
         leftBack.setDirection(DcMotor.Direction.FORWARD);
@@ -191,6 +195,8 @@ public class   HardwareRobot
         rightWheelServo.setPosition(rightintakeservostow);
 //        rightClaw.setDirection(Servo.Direction.REVERSE);
 
+        //Limit Switch
+        magSwitch.setMode(DigitalChannel.Mode.INPUT);
 
         //Gyro
         BNO055IMU.Parameters parameters = new BNO055IMU.Parameters();

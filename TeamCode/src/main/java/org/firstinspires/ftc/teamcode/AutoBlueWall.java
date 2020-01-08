@@ -76,7 +76,7 @@ public class AutoBlueWall extends LinearOpMode {
         robot.leftBack.setPower(Math.abs(speed)); //-
         robot.rightBack.setPower(Math.abs(speed)); //-
 
-        while (robot.leftBack.isBusy() && robot.leftFront.isBusy() && robot.rightFront.isBusy() && robot.rightBack.isBusy()){
+        while (robot.leftBack.isBusy() && robot.leftFront.isBusy() && robot.rightFront.isBusy() && robot.rightBack.isBusy() && opModeIsActive()){
 
         }
     }
@@ -149,7 +149,7 @@ public class AutoBlueWall extends LinearOpMode {
         robot.leftBack.setPower(Math.abs(speed));
         robot.rightBack.setPower(Math.abs(speed));
         //While loop is necessary!
-        while (robot.leftBack.isBusy() && robot.rightFront.isBusy() && robot.rightBack.isBusy() && robot.leftFront.isBusy()) {
+        while (robot.leftBack.isBusy() && robot.rightFront.isBusy() && robot.rightBack.isBusy() && robot.leftFront.isBusy() && opModeIsActive()) {
             robot.angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             if( robot.leftBack.getTargetPosition() - robot.leftBack.getCurrentPosition() < whithin1ft){
                 powerinft = .5;
@@ -208,7 +208,7 @@ public class AutoBlueWall extends LinearOpMode {
         }
 
 
-        while (Math.abs(targetAngle - robotAngle) > .5) {
+        while (Math.abs(targetAngle - robotAngle) > .5 && opModeIsActive()) {
             robot.angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             currentAngle = robot.angles.firstAngle;
 
@@ -296,7 +296,7 @@ public class AutoBlueWall extends LinearOpMode {
         strafe(+18 + 5 ,1);
         gyroMove(12*2 - 5,1);
         strafe(-24,1);
-        strafeToLine(false,.6);
+        strafe(24,1);
         gyroMove(-12*3 + 9,1);
 
 */

@@ -79,6 +79,7 @@ public class DriverControl extends OpMode {
 //    double rightStickX1;
     double leftPower;
     double rightPower;
+    double spdmultiplier = 1;
 //
 //    //gamepad2
 //    boolean RB2isPressed;
@@ -105,6 +106,8 @@ public class DriverControl extends OpMode {
     boolean isVerticalgrab = false, isVerticalchanged = false;
     boolean isArmGrab = false, isArmchanged = false;
     boolean isintakeexpanded = false, isintakechanged = false;
+    boolean isArmMotorGrab = false;
+    boolean isGoofed = false;
 
 
     public void gyroMove(double distance, double speed) {
@@ -328,15 +331,19 @@ public class DriverControl extends OpMode {
 //        leftStickX2    = gamepad2.left_stick_x;//rotate the arm
 //        rightStickY2   = gamepad2.right_stick_y;
 //        rightStickX2   = gamepad2.right_stick_x;
-
+        if(gamepad1.right_bumper){
+            spdmultiplier = .5;
+        }else{
+            spdmultiplier = 1;
+        }
         leftPower = Range.clip(-gamepad1.left_stick_y + gamepad1.left_stick_x, -1.0, 1.0);
         rightPower = Range.clip(-gamepad1.left_stick_y - gamepad1.left_stick_x, -1.0, 1.0);
 
 
-        robot.leftFront.setPower(leftPower + gamepad1.right_stick_x);
-        robot.rightFront.setPower(rightPower -gamepad1.right_stick_x);
-        robot.leftBack.setPower(leftPower-gamepad1.right_stick_x);
-        robot.rightBack.setPower(rightPower+gamepad1.right_stick_x);
+        robot.leftFront.setPower(leftPower + gamepad1.right_stick_x * spdmultiplier);
+        robot.rightFront.setPower(rightPower -gamepad1.right_stick_x * spdmultiplier);
+        robot.leftBack.setPower(leftPower-gamepad1.right_stick_x * spdmultiplier);
+        robot.rightBack.setPower(rightPower+gamepad1.right_stick_x * spdmultiplier);
 
 
         //toggles the opening and closing of the front servos
@@ -365,16 +372,43 @@ public class DriverControl extends OpMode {
         }
 
         //Toggles the hand flip
-        if(gamepad2.a && !isVerticalchanged){
+        if(gamepad2.a && !isVerticalchanged) {
             robot.verticalServo.setPosition(isVerticalgrab ? robot.verticalClawPlace : robot.verticalClawGrab);
             isVerticalgrab = !isVerticalgrab;
+            robot.armMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+            robot.armMotor.setTargetPosition(!isVerticalgrab ? 0 : -4867);
+            robot.armMotor.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            robot.armMotor.setPower(1);
+            while (robot.armMotor.isBusy() && !isGoofed) {
+                if (!robot.magSwitch.getState()) {
+                    if(gamepad1.right_bumper){
+                        spdmultiplier = .5;
+                    }else{
+                        spdmultiplier = 1;
+                    }
+                    leftPower = Range.clip(-gamepad1.left_stick_y + gamepad1.left_stick_x, -1.0, 1.0);
+                    rightPower = Range.clip(-gamepad1.left_stick_y - gamepad1.left_stick_x, -1.0, 1.0);
+                    robot.leftFront.setPower(leftPower + gamepad1.right_stick_x * spdmultiplier);
+                    robot.rightFront.setPower(rightPower -gamepad1.right_stick_x * spdmultiplier);
+                    robot.leftBack.setPower(leftPower-gamepad1.right_stick_x * spdmultiplier);
+                    robot.rightBack.setPower(rightPower+gamepad1.right_stick_x * spdmultiplier);
+                    isGoofed = true;
+                    break;
+                }
+            }
+            robot.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
             isVerticalchanged = true;
-        }
-        else if(!gamepad2.a)isVerticalchanged = false;
+        } else if(!gamepad2.a){isVerticalchanged = false;}
         //toggles the hand opening and closing
+        if(gamepad2.y && !isArmMotorGrab) {
+            robot.armMotor.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+            robot.armMotor.setMode(DcMotor.RunMode.RUN_WITHOUT_ENCODER);
+            isGoofed = false;
+            isArmMotorGrab = true;
+        }else if(!gamepad2.y){isArmMotorGrab = false;}
         if(gamepad2.b && !isArmchanged) {
-            robot.rightClaw.setPosition(isArmGrab ? robot.rightclawclose:robot.rightclawopen);
-            robot.leftClaw.setPosition(isArmGrab ? robot.leftclawclose:robot.leftclawopen);
+            robot.rightClaw.setPosition(!isArmGrab ? robot.rightclawclose:robot.rightclawopen);
+            robot.leftClaw.setPosition(!isArmGrab ? robot.leftclawclose:robot.leftclawopen);
             isArmGrab = !isArmGrab;
             isArmchanged = true;
         }else if(!gamepad2.b){isArmchanged = false;}
@@ -405,6 +439,8 @@ public class DriverControl extends OpMode {
             robot.leftWheel.setPower(1);
         }
 
-
+        telemetry.addData("limit switch state", robot.magSwitch.getState());
+        telemetry.addData("Arm motor encoder value (LbA1,LbB1)", robot.armMotor.getCurrentPosition());
     }
+
 }

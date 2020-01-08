@@ -78,7 +78,7 @@ public class AutoBlueBridge extends LinearOpMode {
         robot.leftBack.setPower(Math.abs(speed)); //-
         robot.rightBack.setPower(Math.abs(speed)); //-
 
-        while (robot.leftBack.isBusy() && robot.leftFront.isBusy() && robot.rightFront.isBusy() && robot.rightBack.isBusy()){
+        while (robot.leftBack.isBusy() && robot.leftFront.isBusy() && robot.rightFront.isBusy() && robot.rightBack.isBusy() && opModeIsActive()){
 
         }
     }
@@ -151,7 +151,7 @@ public class AutoBlueBridge extends LinearOpMode {
         robot.leftBack.setPower(Math.abs(speed));
         robot.rightBack.setPower(Math.abs(speed));
         //While loop is necessary!
-        while (robot.leftBack.isBusy() && robot.rightFront.isBusy() && robot.rightBack.isBusy() && robot.leftFront.isBusy()) {
+        while (robot.leftBack.isBusy() && robot.rightFront.isBusy() && robot.rightBack.isBusy() && robot.leftFront.isBusy() && opModeIsActive()) {
             robot.angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             if( robot.leftBack.getTargetPosition() - robot.leftBack.getCurrentPosition() < whithin1ft){
                 powerinft = .5;
@@ -210,7 +210,7 @@ public class AutoBlueBridge extends LinearOpMode {
         }
 
 
-        while (Math.abs(targetAngle - robotAngle) > .5) {
+        while (Math.abs(targetAngle - robotAngle) > .5 && opModeIsActive()) {
             robot.angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             currentAngle = robot.angles.firstAngle;
 
@@ -281,7 +281,23 @@ public class AutoBlueBridge extends LinearOpMode {
 
 
         waitForStart();
-        runtime.reset();
+        runtime.reset(); 
+
+        strafe(-9,.5);
+        gyroMove(24*2 - 18-3,1);
+        gyroMove(3,.5);
+        gyroMove(3,.3);
+        robot.rightGrabServo.setPosition(robot.rightgrabclose);
+        robot.leftGrabServo.setPosition(robot.leftgrabclosed);
+        sleep(1000);
+        gyroMove(-24*2 + 18,1);
+        gyroMove(-9,.5);
+        robot.rightGrabServo.setPosition(robot.rightgrabopen);
+        robot.leftGrabServo.setPosition(robot.leftgrabopen);
+        strafe(26 ,1);
+        gyroMove(24,1);
+        strafe(24,1);
+        gyroMove(10,1);
 
 //        strafeToLine(true ,.7);
 /*

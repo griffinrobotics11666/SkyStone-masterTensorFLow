@@ -11,7 +11,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AngleUnit;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
-@Autonomous(name="Autonomous Red (Wall)", group="Auto")
+@Autonomous(name="Autonomous Red (Bridge)", group="Auto")
 //@Disabled
 public class AutoRedBridge extends LinearOpMode {
     HardwareRobot robot = new HardwareRobot();
@@ -76,7 +76,7 @@ public class AutoRedBridge extends LinearOpMode {
         robot.leftBack.setPower(Math.abs(speed)); //-
         robot.rightBack.setPower(Math.abs(speed)); //-
 
-        while (robot.leftBack.isBusy() && robot.leftFront.isBusy() && robot.rightFront.isBusy() && robot.rightBack.isBusy()){
+        while (robot.leftBack.isBusy() && robot.leftFront.isBusy() && robot.rightFront.isBusy() && robot.rightBack.isBusy() && opModeIsActive()){
 
         }
     }
@@ -149,7 +149,7 @@ public class AutoRedBridge extends LinearOpMode {
         robot.leftBack.setPower(Math.abs(speed));
         robot.rightBack.setPower(Math.abs(speed));
         //While loop is necessary!
-        while (robot.leftBack.isBusy() && robot.rightFront.isBusy() && robot.rightBack.isBusy() && robot.leftFront.isBusy()) {
+        while (robot.leftBack.isBusy() && robot.rightFront.isBusy() && robot.rightBack.isBusy() && robot.leftFront.isBusy() && opModeIsActive()) {
             robot.angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             if( robot.leftBack.getTargetPosition() - robot.leftBack.getCurrentPosition() < whithin1ft){
                 powerinft = .5;
@@ -208,7 +208,7 @@ public class AutoRedBridge extends LinearOpMode {
         }
 
 
-        while (Math.abs(targetAngle - robotAngle) > .5) {
+        while (Math.abs(targetAngle - robotAngle) > .5 && opModeIsActive()) {
             robot.angles = robot.imu.getAngularOrientation(AxesReference.INTRINSIC, AxesOrder.ZYX, AngleUnit.DEGREES);
             currentAngle = robot.angles.firstAngle;
 
@@ -282,8 +282,7 @@ public class AutoRedBridge extends LinearOpMode {
         waitForStart();
         runtime.reset();
 
-//        strafeToLine(true ,.7);
-
+        strafe(9,.5);
         gyroMove(24*2 - 18-3,1);
         gyroMove(3,.5);
         gyroMove(3,.3);
@@ -294,11 +293,27 @@ public class AutoRedBridge extends LinearOpMode {
         gyroMove(-9,.5);
         robot.rightGrabServo.setPosition(robot.rightgrabopen);
         robot.leftGrabServo.setPosition(robot.leftgrabopen);
-        strafe(-18 - 5 ,1);
-        gyroMove(12*2 - 5,1);
-        strafe(24,1);
-        strafeToLine(true,.6);
+        strafe(-24 ,1);
+        gyroMove(24,1);
+        strafe(-26,1);
+        gyroMove(10,1);
 
+//        strafeToLine(true ,.7);
+
+//        gyroMove(24*2 - 18-3,1);
+//        gyroMove(3,.5);
+//        gyroMove(3,.3);
+//        robot.rightGrabServo.setPosition(robot.rightgrabclose);
+//        robot.leftGrabServo.setPosition(robot.leftgrabclosed);
+//        sleep(1000);
+//        gyroMove(-24*2 + 18,1);
+//        gyroMove(-9,.5);
+//        robot.rightGrabServo.setPosition(robot.rightgrabopen);
+//        robot.leftGrabServo.setPosition(robot.leftgrabopen);
+//        strafe(-18 - 5 ,1);
+//        gyroMove(12*2 - 5,1);
+//        strafe(24,1);
+//        strafe(-24,1);
 
 
 //        strafe(12*2 ,.5);
