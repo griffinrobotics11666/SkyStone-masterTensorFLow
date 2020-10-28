@@ -47,7 +47,7 @@ import org.firstinspires.ftc.teamcode.HardwareRobot;
  * Demonstrates empty OpMode
  */
 @TeleOp(name = "Driver_Control", group = "Concept")
-//@Disabled
+@Disabled
 public class DriverControl extends OpMode {
     HardwareRobot robot = new HardwareRobot();
 

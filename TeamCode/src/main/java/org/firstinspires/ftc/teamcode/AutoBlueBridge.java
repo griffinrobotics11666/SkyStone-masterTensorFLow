@@ -14,7 +14,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesOrder;
 import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 
 @Autonomous(name="Autonomous Blue(Bridge)", group="Auto")
-//@Disabled
+@Disabled
 public class AutoBlueBridge extends LinearOpMode {
     HardwareRobot robot = new HardwareRobot();
     float hsvValues[] = {0F, 0F, 0F};

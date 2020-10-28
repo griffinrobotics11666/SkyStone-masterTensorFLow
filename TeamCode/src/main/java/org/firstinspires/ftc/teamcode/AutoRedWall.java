@@ -18,7 +18,7 @@ import org.firstinspires.ftc.robotcore.external.navigation.AxesReference;
 import org.firstinspires.ftc.robotcore.external.navigation.Orientation;
 
 @Autonomous(name="Autonomous Red (Wall)", group="Auto")
-//@Disabled
+@Disabled
 public class AutoRedWall extends LinearOpMode {
     HardwareRobot robot = new HardwareRobot();
     float hsvValues[] = {0F, 0F, 0F};
